@@ -3,7 +3,7 @@ const random = require("random");
 function calcDate(){
     const leaveDate = new Date("2021-04-28 00:00:00");
     const nowDate = new Date();
-    return Math.floor((nowDate - leaveDate)/(1000*86400));
+    return Math.floor((Number(nowDate) - Number(leaveDate))/(1000*86400));
 }
 
 function calcChar(){
