@@ -54,8 +54,9 @@ function changeMode(mode,doApplyHash,doApplyRadio){
 
 changeMode(location.hash,false,true);
 
-for(let id in LeaveDatesMap){
-    document.getElementById(id).onclick = ()=>changeMode(id,true);
+const select = document.getElementById("nav-container");
+select.onchange = ()=>{
+    changeMode(select.options[select.selectedIndex].id,true);
 }
 
 document.getElementById("btn-once").onclick = ()=>generateText(1);
