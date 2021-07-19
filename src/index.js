@@ -49,7 +49,7 @@ function changeMode(mode,doApplyHash,doApplyRadio){
     currentMode = mode;
     if(!LeaveDatesMap[currentMode])currentMode = "junze_old";
     if(doApplyHash)location.hash = currentMode;
-    if(doApplyRadio)document.getElementById(currentMode).checked = true;
+    if(doApplyRadio)document.getElementById(currentMode).selected = true;
 }
 
 changeMode(location.hash,false,true);
