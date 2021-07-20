@@ -41,16 +41,26 @@ function calcChar(){
     return String.fromCharCode(random.default.int(0x4e00,0x9fff));
 }
 
+function hasX(){
+    let s = personalizeText.value;
+    return currentMode=="personalize"&&s.replace("%x","")!=s;
+}
+
 const TextTemplate = {
     junze_old: (date,char)=>`俊泽不在的第${date}天，${char}他。`,
     junze_new: (date,char)=>`俊泽不在的第${date}天，${char}他。`,
     cute_mb: (date,char)=>`看不见赵总的第${date}天，${char}她。`,
     personalize: (date,char)=>{
-        return personalizeText.value
+        let s =  personalizeText.value
             .replace(new RegExp("%d","g"),date)
             .replace(new RegExp("%e","g"),-date)
             .replace(new RegExp("%c","g"),char);
-        
+        let xRep = s.replace("%x",calcChar());
+        while(s!=xRep){
+            s=xRep;
+            xRep = s.replace("%x",calcChar());
+        }
+        return s;
     },
 }
 
@@ -65,7 +75,11 @@ function generateText(times){
         const anchor = document.createElement("a");
         let char = calcChar();
         anchor.textContent = TextTemplate[currentMode](date,char);
-        anchor.href = `https://www.baidu.com/baidu?ie=utf-8&wd=${char}`;
+        if(hasX()){
+            anchor.href = "https://b23.tv/BV1GJ411x7h7";
+        }else{
+            anchor.href = `https://www.baidu.com/baidu?ie=utf-8&wd=${char}`;
+        }
         anchor.target = "_blank";
         textElem.appendChild(anchor);
         newContainer.appendChild(textElem);
