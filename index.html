@@ -6,7 +6,7 @@
     </head>
     <body>
         <style>
-            a {
+            a.no-decoration {
                 text-decoration: none;
                 color: inherit;
             }
@@ -32,7 +32,11 @@
                 </div>
                 <div id="text-input" class="form-item">
                     <span>模板：</span><input type="text" id="personalize-text"><br>
-                    <span>%d取代正数天数，%e取代倒数天数，%c取代随机字符，%x取代互异的随机字符</span>
+                    <span id="template-tips">%d取代正数天数，%e取代倒数天数，%c取代随机字符，%x取代互异的随机字符</span>
+                </div>
+                <div id="eval-mode" class="form-item">
+                    <label><input type="checkbox" name="enable-eval-mode" id="enable-eval-mode">启用eval模式（实验性）</label>
+                    <b>启用此功能前请确保你理解其含义和风险。</b><a href="eval_mode_tips.html" target="_blank">了解更多</a>
                 </div>
             </div>
             <div id="text-container">
