@@ -1,4 +1,9 @@
 const random = require("random");
+const axios = require("axios");
+
+random.default.itemOf = (a)=>{
+    return a[random.default.int(0,a.length-1)];
+}
 
 const LeaveDatesMap = {
     junze_old: new Date(1619539200000),
@@ -44,6 +49,8 @@ enableEvalModeCheckbox.onchange = ()=>{
 
 let currentMode = "junze_old";
 
+let nlpData = [];
+
 function calcDate(){
     const leaveDate = getCurrentDate();
     const nowDate = new Date();
@@ -59,6 +66,30 @@ function hasX(){
     return currentMode=="personalize"&&s.replace("%x","")!=s;
 }
 
+function calcNlp(...flags){
+    return random.default.itemOf(nlpData.filter(v=>{
+        return flags.includes(v[1])
+    }))[0];
+}
+
+function parseNlpData(){
+    if(localStorage.getItem("nlp-data")){
+        nlpData = localStorage.getItem("nlp-data").split("\n").map(v=>v.split(",").map(s=>s.trim()));
+    }
+}
+
+parseNlpData();
+
+async function syncNlpData(){
+    let res = await axios.default.get("corpus.csv");
+    localStorage.setItem("nlp-data",res.data);
+    parseNlpData();
+}
+
+function removeNlpData(){
+    localStorage.removeItem("nlp-data");
+}
+
 function getJunzeObject(date,char){
     return {
         dateCount: date,
@@ -70,6 +101,7 @@ function getJunzeObject(date,char){
             return String.fromCharCode(random.default.int(l,r));
         },
         random: random.default,
+        nlp: calcNlp,
     }
 }
 
@@ -89,14 +121,13 @@ const TextTemplate = {
             return s;
         }else{
             let s =  personalizeText.value
-                .replace(new RegExp("%d","g"),date)
-                .replace(new RegExp("%e","g"),-date)
-                .replace(new RegExp("%c","g"),char);
-            let xRep = s.replace("%x",calcChar());
-            while(s!=xRep){
-                s=xRep;
-                xRep = s.replace("%x",calcChar());
-            }
+                .replace(/%d/g,date)
+                .replace(/%e/g,-date)
+                .replace(/%c/g,char)
+                .replace(/%x/g,()=>calcChar())
+                .replace(/%n\((.*)\)/g,(substr,flag)=>{
+                    return calcNlp(...flag.split(",").map(s=>s.trim()));
+                });
             return s;
         }
     },
@@ -154,5 +185,14 @@ select.onchange = ()=>{
 document.getElementById("btn-once").onclick = ()=>generateText(1);
 document.getElementById("btn-4").onclick = ()=>generateText(4);
 document.getElementById("btn-8").onclick = ()=>generateText(8);
+document.getElementById("btn-sync-corpus").onclick = async()=>{
+    try{
+        await syncNlpData();
+        alert("同步已完成。");
+    }catch(e){
+        alert("同步失败，原因是："+e);
+    }
+}
+document.getElementById("btn-clear-cache").onclick = ()=>removeNlpData();
 
 generateText(1);
