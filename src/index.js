@@ -125,7 +125,7 @@ const TextTemplate = {
                 .replace(/%e/g,-date)
                 .replace(/%c/g,char)
                 .replace(/%x/g,()=>calcChar())
-                .replace(/%n\((.*)\)/g,(substr,flag)=>{
+                .replace(/%n\((.*?)\)/g,(substr,flag)=>{
                     return calcNlp(...flag.split(",").map(s=>s.trim()));
                 });
             return s;
