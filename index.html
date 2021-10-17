@@ -3,53 +3,59 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no;" />
         <title>Junze Generator</title>
+        <link rel="stylesheet" href="layout.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
     </head>
     <body>
-        <style>
-            a.no-decoration {
-                text-decoration: none;
-                color: inherit;
-            }
-            a:hover {
-                text-decoration-line: underline;
-            }
-        </style>
-        <div id="main">
-            <div id="buttons-container">
-                <select id="nav-container">
-                    <option id="junze_old" name="junze_old">俊泽（五一集训）</option>
-                    <option id="junze_new" name="junze_new">俊泽（暑假集训）</option>
-                    <option id="cute_mb" name="cute_mb">赵总</option>
-                    <option id="personalize" name="personalize">自定义（beta）</option>
-                </select>
-                <button id="btn-once">单抽</button>
-                <button id="btn-4">4连抽</button>
-                <button id="btn-8">8连抽</button>
-                <a href="tips.html" target="_blank">帮助</a>
-            </div>
-            <div id="personalize-container">
-                <div id="time-selector" class="form-item">
-                    <span>日期：</span><input type="date" id="personalize-date">
-                </div>
-                <div id="text-input" class="form-item">
-                    <span>模板：</span><input type="text" id="personalize-text"><br>
-                    <span id="template-tips">%d取代正数天数，%e取代倒数天数，%c取代随机字符，%x取代互异的随机字符，%n()用于NLP模式。</span>
-                </div>
-                <div id="eval-mode" class="form-item">
-                    <label><input type="checkbox" name="enable-eval-mode" id="enable-eval-mode">启用eval模式（实验性）</label>
-                    <b>启用此功能前请确保你理解其含义和风险。</b><a href="tips.html#eval-mode" target="_blank">了解更多</a>
-                </div>
-                <div id="nlp-mode" class="form-item">
-                    <label>NLP模式（实验性）</label>
-                    <button id="btn-sync-corpus">同步词库</button>
-                    <button id="btn-clear-cache">清除缓存</button>
-                    <a href="tips.html#nlp-mode" target="_blank">了解更多</a>
-                </div>
-            </div>
-            <div id="text-container">
-
-            </div>
+        <mwc-top-app-bar-fixed>
+            <div slot="title">俊泽生成器</div>
+            <mwc-icon-button icon="bookmarks" slot="actionItems"></mwc-icon-button>
+            <mwc-icon-button icon="help" slot="actionItems"></mwc-icon-button>
+        </mwc-top-app-bar-fixed>
+        <div id="container">
+            <main>
+                <section id="input-area">
+                    <div class="input-block">
+                        <mwc-select class="block" label="预设" outlined>
+                            <mwc-list-item value='_default'>默认模板</mwc-list-item>
+                        </mwc-select>
+                    </div>
+                    <div class="input-block">
+                        <mwc-textfield class="block" label="日期" icon="today" outlined></mwc-textfield>
+                    </div>
+                    <div class="input-block">
+                        <mwc-textfield class="block" label="模板" outlined></mwc-textfield>
+                    </div>
+                    <div class="input-block">
+                        <mwc-button fullwidth icon="settings">切换高级选项</mwc-button>
+                    </div>
+                    <div class="input-block">
+                        <div class="option-row">
+                            <mwc-checkbox name="enable-eval"></mwc-checkbox>
+                            <label>启用eval模式（可能存在潜在风险）</label>
+                        </div>
+                        <div class="option-row">
+                            <mwc-checkbox name="enable-markdown-parse"></mwc-checkbox>
+                            <label>启用Markdown解析</label>
+                        </div>
+                        <div class="option-row">
+                            <mwc-checkbox name="enable-html-output"></mwc-checkbox>
+                            <label>启用HTML输出（可能存在潜在风险）</label>
+                        </div>
+                    </div>
+                    <div class="input-block">
+                        <mwc-button fullwidth raised icon="check">生成</mwc-button>
+                    </div>
+                </section>
+                <section id="output-area">
+                    
+                </section>
+            </main>
         </div>
+        
         <script src="dist/bundle.js"></script>
     </body>
 </html>

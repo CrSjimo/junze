@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/CrSjimo/junze#readme",
   "dependencies": {
+    "@material/mwc-button": "^0.25.2",
+    "@material/mwc-icon-button": "^0.25.2",
+    "@material/mwc-select": "^0.25.2",
+    "@material/mwc-textfield": "^0.25.2",
+    "@material/mwc-top-app-bar-fixed": "^0.25.2",
     "axios": "^0.21.1",
     "random": "^3.0.6"
   },
