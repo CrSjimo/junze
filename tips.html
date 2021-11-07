@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no;" />
+        <title>关于eval模式</title>
+    </head>
+    <body>
+        <h1>俊泽生成器</h1>
+        <p>一个用来表达对俊泽和赵总的思念，以及生成一些其他奇怪东西的程序。</p>
+        <p>俊泽生成器的诞生离不开<a href="https://github.com/transitive-bullshit/random" target="_blank">random</a>，<a href="https://github.com/axios/axios" target="_blank">axios</a>，<a href="https://github.com/liwenzhu/corpusZh" target="_target">corpusZh</a>等开源项目。俊泽生成器本身也是一个使用DO WHAT THE FUCK YOU WANT TO协议的<a href="https://github.com/CrSjimo/junze" target="_blank">开源项目</a>。</p>
+        <a name="eval-mode"></a>
+        <h1>关于俊泽生成器</h1>
+        <p>eval模式允许用户在自定义模板中使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals" target="_blank">JavaScript模板字符串</a>，例如：</p>
+        <p><pre><code>俊泽不在的第${junze.random.int(114514,1919810)}天，${junze.getRandomChar()}${junze.dateCount}他。</code></pre></p>
+        <p>在junze对象中提供了一下属性和方法可供使用：</p>
+        <ul>
+            <li><code>junze.dateCount</code>：<code>number</code>类型。相当于%d。</li>
+            <li><code>junze.dateCountDown</code>：<code>number</code>类型。相当于%e。</li>
+            <li><code>junze.date</code>：<code>Date</code>类型。获取设置的目标日期。</li>
+            <li><code>junze.char</code>：<code>string</code>类型。相当于%c。</li>
+            <li><code>junze.getRandomChar(l, r)</code>：返回<code>string</code>，<code>l</code>代表Unicode码下界（包含），<code>r</code>代表Unicode码上界（不包含），缺省则相当于%x。</li>
+            <li><code>junze.random</code>：random模块。<a href="https://www.npmjs.com/package/random" target="_blank">查看官方文档</a></li>
+            <li><code>junze.nlp(...args)</code>：NLP模式。<a href="#nlp-mode">查看文档</a></li>
+        </ul>
+        <p>在eval模式中使用不明来源的代码可能会产生难以预料的后果并威胁使用者的信息安全。在执行前请确保你信任所执行的代码并充分理解其含义。</p>
+        <a name="nlp-mode"></a>
+        <h1>关于NLP模式</h1>
+        <p>在NLP模式中，可以生成指定词性的词汇。</p>
+        <p>首次使用前，需要同步词库（约400KiB）。随着词库的不定期更新，可能还需要随时同步词库。</p>
+        <p>使用<code>%n(...)</code>或者在eval模式中<code>junze.nlp(...args)</code></p>用来生成。括号中填写（eval模式中传递参数）用逗号分割的词性标记。词性标记如下：
+        <table>
+            <tr>
+                <th>标记</th><th>词性</th>
+            </tr>
+            
+            <tr><td>n</td><td>普通名词</td></tr>
+            <tr><td>nt</td><td>时间名词</td></tr>
+            <tr><td>nd</td><td>方位名词</td></tr>
+            <tr><td>nl</td><td>处所名词</td></tr>
+            <tr><td>nh</td><td>人名</td></tr>
+            <tr><td>nhf</td><td>姓</td></tr>
+            <tr><td>nhs</td><td>名</td></tr>
+            <tr><td>ns</td><td>地名</td></tr>
+            <tr><td>nn</td><td>族名</td></tr>
+            <tr><td>ni</td><td>机构名</td></tr>
+            <tr><td>nz</td><td>其他专名</td></tr>
+            <tr><td>v</td><td>动词</td></tr>
+            <tr><td>vd</td><td>趋向动词</td></tr>
+            <tr><td>vl</td><td>联系动词</td></tr>
+            <tr><td>vu</td><td>能愿动词</td></tr>
+            <tr><td>a</td><td>形容词</td></tr>
+            <tr><td>f</td><td>区别词</td></tr>
+            <tr><td>m</td><td>数词　　</td></tr>
+            <tr><td>q</td><td>量词</td></tr>
+            <tr><td>d</td><td>副词</td></tr>
+            <tr><td>r</td><td>代词</td></tr>
+            <tr><td>p</td><td>介词</td></tr>
+            <tr><td>c</td><td>连词</td></tr>
+            <tr><td>u</td><td>助词</td></tr>
+            <tr><td>e</td><td>叹词</td></tr>
+            <tr><td>o</td><td>拟声词</td></tr>
+            <tr><td>i</td><td>习用语</td></tr>
+            <tr><td>j</td><td>缩略语</td></tr>
+            <tr><td>h</td><td>前接成分</td></tr>
+            <tr><td>k</td><td>后接成分</td></tr>
+            <tr><td>g</td><td>语素字</td></tr>
+            <tr><td>x</td><td>非语素字</td></tr>
+        </table>
+        <p><del>CRS也不知道它们都是什么东西。</del></p>
+        <p>例如：<code>%n(n,v)</code>或者eval模式中<code>junze.nlp("n","v")</code>将会在名词和动词中随机选择一个。</p>
+    </body>
+</html>
