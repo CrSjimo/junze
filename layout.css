@@ -12,6 +12,9 @@
         flex-grow: 1;
     }
 
+    .only-mobile {
+        display: none;
+    }
 
 }
 

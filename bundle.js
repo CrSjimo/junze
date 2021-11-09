@@ -21949,12 +21949,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_mwc_snackbar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material/mwc-snackbar */ "./node_modules/@material/mwc-snackbar/mwc-snackbar.js");
 /* harmony import */ var _material_mwc_dialog__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material/mwc-dialog */ "./node_modules/@material/mwc-dialog/mwc-dialog.js");
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core */ "./src/core.js");
+/* harmony import */ var _toggle_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./toggle_input */ "./src/toggle_input.js");
+/* harmony import */ var _toggle_input__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_toggle_input__WEBPACK_IMPORTED_MODULE_10__);
 
 
 
 
 
  // import '@material/mwc-list';
+
 
 
 
@@ -22230,6 +22233,35 @@ Object(_registerInitAction__WEBPACK_IMPORTED_MODULE_0__["registerInitAction"])((
     templateState.applyTemplate(localStorage.getItem('config-current-template'));
   }
 });
+
+/***/ }),
+
+/***/ "./src/toggle_input.js":
+/*!*****************************!*\
+  !*** ./src/toggle_input.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+let toggleButton = document.getElementById('btn-toggle');
+
+toggleButton.onclick = () => {
+  if (toggleButton.icon === 'expand_less') {
+    for (let elem of document.getElementsByClassName('expandable')) {
+      elem.style.display = 'none';
+    }
+
+    toggleButton.icon = 'expand_more';
+    toggleButton.textContent = '展开输入区域';
+  } else {
+    for (let elem of document.getElementsByClassName('expandable')) {
+      elem.style.display = null;
+    }
+
+    toggleButton.icon = 'expand_less';
+    toggleButton.textContent = '收起输入区域';
+  }
+};
 
 /***/ }),
 
