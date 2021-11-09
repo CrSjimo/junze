@@ -10,3 +10,4 @@ import '@material/mwc-snackbar';
 import '@material/mwc-dialog';
 
 import './core';
+import './toggle_input';

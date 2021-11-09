@@ -13,7 +13,7 @@ document.getElementById('btn-generate').onclick = ()=>{
     let formDateDay = document.getElementById('form-date-day');
     date.setFullYear(
         formDateYear.value,
-        formDateMonth.value,
+        formDateMonth.value-1,
         formDateDay.value,
     );
     date.setHours(0,0,0,0);
