@@ -21860,7 +21860,7 @@ document.getElementById('btn-generate').onclick = () => {
   let formDateYear = document.getElementById('form-date-year');
   let formDateMonth = document.getElementById('form-date-month');
   let formDateDay = document.getElementById('form-date-day');
-  date.setFullYear(formDateYear.value, formDateMonth.value, formDateDay.value);
+  date.setFullYear(formDateYear.value, formDateMonth.value - 1, formDateDay.value);
   date.setHours(0, 0, 0, 0);
   let pattern = document.getElementById('form-pattern').value;
   let turns = document.getElementById('form-turns').value;
