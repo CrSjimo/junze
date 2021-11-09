@@ -86,16 +86,16 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/bates.js":
-/*!***********************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/bates.js ***!
-  \***********************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/bates.js":
+/*!*****************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/bates.js ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, n = 1) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(n).isInt().isPositive();
@@ -108,16 +108,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/bernoulli.js":
-/*!***************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/bernoulli.js ***!
-  \***************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/bernoulli.js":
+/*!*********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/bernoulli.js ***!
+  \*********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, p = 0.5) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(p).greaterThanOrEqual(0).lessThan(1);
@@ -129,16 +129,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/binomial.js":
-/*!**************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/binomial.js ***!
-  \**************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/binomial.js":
+/*!********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/binomial.js ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, n = 1, p = 0.5) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(n).isInt().isPositive();
@@ -158,16 +158,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/exponential.js":
-/*!*****************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/exponential.js ***!
-  \*****************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/exponential.js":
+/*!***********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/exponential.js ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, lambda = 1) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(lambda).isPositive();
@@ -179,16 +179,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/geometric.js":
-/*!***************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/geometric.js ***!
-  \***************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/geometric.js":
+/*!*********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/geometric.js ***!
+  \*********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, p = 0.5) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(p).greaterThan(0).lessThan(1);
@@ -201,16 +201,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/irwin-hall.js":
-/*!****************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/irwin-hall.js ***!
-  \****************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/irwin-hall.js":
+/*!**********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/irwin-hall.js ***!
+  \**********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, n = 1) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(n).isInt().greaterThanOrEqual(0);
@@ -226,10 +226,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/log-normal.js":
-/*!****************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/log-normal.js ***!
-  \****************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/log-normal.js":
+/*!**********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/log-normal.js ***!
+  \**********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -245,10 +245,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/normal.js":
-/*!************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/normal.js ***!
-  \************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/normal.js":
+/*!******************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/normal.js ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -269,16 +269,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/pareto.js":
-/*!************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/pareto.js ***!
-  \************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/pareto.js":
+/*!******************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/pareto.js ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, alpha = 1) => {
     Object(_validation__WEBPACK_IMPORTED_MODULE_0__["numberValidator"])(alpha).greaterThanOrEqual(0);
@@ -291,16 +291,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/poisson.js":
-/*!*************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/poisson.js ***!
-  \*************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/poisson.js":
+/*!*******************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/poisson.js ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 const logFactorialTable = [
     0.0,
@@ -388,10 +388,10 @@ const logSqrt2PI = 0.91893853320467267;
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/uniform-boolean.js":
-/*!*********************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/uniform-boolean.js ***!
-  \*********************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/uniform-boolean.js":
+/*!***************************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/uniform-boolean.js ***!
+  \***************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -406,16 +406,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/uniform-int.js":
-/*!*****************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/uniform-int.js ***!
-  \*****************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/uniform-int.js":
+/*!***********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/uniform-int.js ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "../junze-generator/node_modules/random/dist/esm/validation.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validation */ "./junze-generator/node_modules/random/dist/esm/validation.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ((random, min = 0, max = 1) => {
     if (max === undefined) {
@@ -432,10 +432,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/distributions/uniform.js":
-/*!*************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/distributions/uniform.js ***!
-  \*************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/distributions/uniform.js":
+/*!*******************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/distributions/uniform.js ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -450,17 +450,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/generators/function.js":
-/*!***********************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/generators/function.js ***!
-  \***********************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/generators/function.js":
+/*!*****************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/generators/function.js ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RNGFunction; });
-/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rng */ "../junze-generator/node_modules/random/dist/esm/rng.js");
+/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rng */ "./junze-generator/node_modules/random/dist/esm/rng.js");
 
 class RNGFunction extends _rng__WEBPACK_IMPORTED_MODULE_0__["default"] {
     constructor(thunk, opts) {
@@ -485,17 +485,17 @@ class RNGFunction extends _rng__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/generators/math-random.js":
-/*!**************************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/generators/math-random.js ***!
-  \**************************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/generators/math-random.js":
+/*!********************************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/generators/math-random.js ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RNGMathRandom; });
-/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rng */ "../junze-generator/node_modules/random/dist/esm/rng.js");
+/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rng */ "./junze-generator/node_modules/random/dist/esm/rng.js");
 
 class RNGMathRandom extends _rng__WEBPACK_IMPORTED_MODULE_0__["default"] {
     get name() {
@@ -516,16 +516,16 @@ class RNGMathRandom extends _rng__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/index.esm.js":
-/*!*************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/index.esm.js ***!
-  \*************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/index.esm.js":
+/*!*******************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/index.esm.js ***!
+  \*******************************************************************/
 /*! exports provided: RNG, RNGFactory, Random, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _random__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./random */ "../junze-generator/node_modules/random/dist/esm/random.js");
+/* harmony import */ var _random__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./random */ "./junze-generator/node_modules/random/dist/esm/random.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RNG", function() { return _random__WEBPACK_IMPORTED_MODULE_0__["RNG"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RNGFactory", function() { return _random__WEBPACK_IMPORTED_MODULE_0__["RNGFactory"]; });
@@ -539,36 +539,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/random.js":
-/*!**********************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/random.js ***!
-  \**********************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/random.js":
+/*!****************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/random.js ***!
+  \****************************************************************/
 /*! exports provided: RNG, RNGFactory, Random, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Random", function() { return Random; });
-/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rng */ "../junze-generator/node_modules/random/dist/esm/rng.js");
+/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rng */ "./junze-generator/node_modules/random/dist/esm/rng.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RNG", function() { return _rng__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _rng_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rng-factory */ "../junze-generator/node_modules/random/dist/esm/rng-factory.js");
+/* harmony import */ var _rng_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rng-factory */ "./junze-generator/node_modules/random/dist/esm/rng-factory.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RNGFactory", function() { return _rng_factory__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _distributions_uniform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./distributions/uniform */ "../junze-generator/node_modules/random/dist/esm/distributions/uniform.js");
-/* harmony import */ var _distributions_uniform_int__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./distributions/uniform-int */ "../junze-generator/node_modules/random/dist/esm/distributions/uniform-int.js");
-/* harmony import */ var _distributions_uniform_boolean__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./distributions/uniform-boolean */ "../junze-generator/node_modules/random/dist/esm/distributions/uniform-boolean.js");
-/* harmony import */ var _distributions_normal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./distributions/normal */ "../junze-generator/node_modules/random/dist/esm/distributions/normal.js");
-/* harmony import */ var _distributions_log_normal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./distributions/log-normal */ "../junze-generator/node_modules/random/dist/esm/distributions/log-normal.js");
-/* harmony import */ var _distributions_bernoulli__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./distributions/bernoulli */ "../junze-generator/node_modules/random/dist/esm/distributions/bernoulli.js");
-/* harmony import */ var _distributions_binomial__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./distributions/binomial */ "../junze-generator/node_modules/random/dist/esm/distributions/binomial.js");
-/* harmony import */ var _distributions_geometric__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./distributions/geometric */ "../junze-generator/node_modules/random/dist/esm/distributions/geometric.js");
-/* harmony import */ var _distributions_poisson__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./distributions/poisson */ "../junze-generator/node_modules/random/dist/esm/distributions/poisson.js");
-/* harmony import */ var _distributions_exponential__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./distributions/exponential */ "../junze-generator/node_modules/random/dist/esm/distributions/exponential.js");
-/* harmony import */ var _distributions_irwin_hall__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./distributions/irwin-hall */ "../junze-generator/node_modules/random/dist/esm/distributions/irwin-hall.js");
-/* harmony import */ var _distributions_bates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./distributions/bates */ "../junze-generator/node_modules/random/dist/esm/distributions/bates.js");
-/* harmony import */ var _distributions_pareto__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./distributions/pareto */ "../junze-generator/node_modules/random/dist/esm/distributions/pareto.js");
-/* harmony import */ var _generators_math_random__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./generators/math-random */ "../junze-generator/node_modules/random/dist/esm/generators/math-random.js");
+/* harmony import */ var _distributions_uniform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./distributions/uniform */ "./junze-generator/node_modules/random/dist/esm/distributions/uniform.js");
+/* harmony import */ var _distributions_uniform_int__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./distributions/uniform-int */ "./junze-generator/node_modules/random/dist/esm/distributions/uniform-int.js");
+/* harmony import */ var _distributions_uniform_boolean__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./distributions/uniform-boolean */ "./junze-generator/node_modules/random/dist/esm/distributions/uniform-boolean.js");
+/* harmony import */ var _distributions_normal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./distributions/normal */ "./junze-generator/node_modules/random/dist/esm/distributions/normal.js");
+/* harmony import */ var _distributions_log_normal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./distributions/log-normal */ "./junze-generator/node_modules/random/dist/esm/distributions/log-normal.js");
+/* harmony import */ var _distributions_bernoulli__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./distributions/bernoulli */ "./junze-generator/node_modules/random/dist/esm/distributions/bernoulli.js");
+/* harmony import */ var _distributions_binomial__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./distributions/binomial */ "./junze-generator/node_modules/random/dist/esm/distributions/binomial.js");
+/* harmony import */ var _distributions_geometric__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./distributions/geometric */ "./junze-generator/node_modules/random/dist/esm/distributions/geometric.js");
+/* harmony import */ var _distributions_poisson__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./distributions/poisson */ "./junze-generator/node_modules/random/dist/esm/distributions/poisson.js");
+/* harmony import */ var _distributions_exponential__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./distributions/exponential */ "./junze-generator/node_modules/random/dist/esm/distributions/exponential.js");
+/* harmony import */ var _distributions_irwin_hall__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./distributions/irwin-hall */ "./junze-generator/node_modules/random/dist/esm/distributions/irwin-hall.js");
+/* harmony import */ var _distributions_bates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./distributions/bates */ "./junze-generator/node_modules/random/dist/esm/distributions/bates.js");
+/* harmony import */ var _distributions_pareto__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./distributions/pareto */ "./junze-generator/node_modules/random/dist/esm/distributions/pareto.js");
+/* harmony import */ var _generators_math_random__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./generators/math-random */ "./junze-generator/node_modules/random/dist/esm/generators/math-random.js");
 
 
 
@@ -922,19 +922,19 @@ class Random {
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/rng-factory.js":
-/*!***************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/rng-factory.js ***!
-  \***************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/rng-factory.js":
+/*!*********************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/rng-factory.js ***!
+  \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var seedrandom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! seedrandom */ "../junze-generator/node_modules/seedrandom/index.js");
+/* harmony import */ var seedrandom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! seedrandom */ "./junze-generator/node_modules/seedrandom/index.js");
 /* harmony import */ var seedrandom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(seedrandom__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rng */ "../junze-generator/node_modules/random/dist/esm/rng.js");
-/* harmony import */ var _generators_function__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./generators/function */ "../junze-generator/node_modules/random/dist/esm/generators/function.js");
+/* harmony import */ var _rng__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rng */ "./junze-generator/node_modules/random/dist/esm/rng.js");
+/* harmony import */ var _generators_function__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./generators/function */ "./junze-generator/node_modules/random/dist/esm/generators/function.js");
 
 
 
@@ -966,10 +966,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/rng.js":
-/*!*******************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/rng.js ***!
-  \*******************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/rng.js":
+/*!*************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/rng.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -997,10 +997,10 @@ class RNG {
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/random/dist/esm/validation.js":
-/*!**************************************************************!*\
-  !*** .-generator/node_modules/random/dist/esm/validation.js ***!
-  \**************************************************************/
+/***/ "./junze-generator/node_modules/random/dist/esm/validation.js":
+/*!********************************************************************!*\
+  !*** ./junze-generator/node_modules/random/dist/esm/validation.js ***!
+  \********************************************************************/
 /*! exports provided: numberValidator, NumberValidator */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1050,10 +1050,10 @@ class NumberValidator {
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/index.js":
-/*!****************************************************!*\
-  !*** .-generator/node_modules/seedrandom/index.js ***!
-  \****************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/index.js":
+/*!**********************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/index.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1069,17 +1069,17 @@ class NumberValidator {
 // alea, a 53-bit multiply-with-carry generator by Johannes Baagøe.
 // Period: ~2^116
 // Reported to pass all BigCrush tests.
-var alea = __webpack_require__(/*! ./lib/alea */ "../junze-generator/node_modules/seedrandom/lib/alea.js");
+var alea = __webpack_require__(/*! ./lib/alea */ "./junze-generator/node_modules/seedrandom/lib/alea.js");
 
 // xor128, a pure xor-shift generator by George Marsaglia.
 // Period: 2^128-1.
 // Reported to fail: MatrixRank and LinearComp.
-var xor128 = __webpack_require__(/*! ./lib/xor128 */ "../junze-generator/node_modules/seedrandom/lib/xor128.js");
+var xor128 = __webpack_require__(/*! ./lib/xor128 */ "./junze-generator/node_modules/seedrandom/lib/xor128.js");
 
 // xorwow, George Marsaglia's 160-bit xor-shift combined plus weyl.
 // Period: 2^192-2^32
 // Reported to fail: CollisionOver, SimpPoker, and LinearComp.
-var xorwow = __webpack_require__(/*! ./lib/xorwow */ "../junze-generator/node_modules/seedrandom/lib/xorwow.js");
+var xorwow = __webpack_require__(/*! ./lib/xorwow */ "./junze-generator/node_modules/seedrandom/lib/xorwow.js");
 
 // xorshift7, by François Panneton and Pierre L'ecuyer, takes
 // a different approach: it adds robustness by allowing more shifts
@@ -1087,7 +1087,7 @@ var xorwow = __webpack_require__(/*! ./lib/xorwow */ "../junze-generator/node_mo
 // with 256 bits, that passes BigCrush with no systmatic failures.
 // Period 2^256-1.
 // No systematic BigCrush failures reported.
-var xorshift7 = __webpack_require__(/*! ./lib/xorshift7 */ "../junze-generator/node_modules/seedrandom/lib/xorshift7.js");
+var xorshift7 = __webpack_require__(/*! ./lib/xorshift7 */ "./junze-generator/node_modules/seedrandom/lib/xorshift7.js");
 
 // xor4096, by Richard Brent, is a 4096-bit xor-shift with a
 // very long period that also adds a Weyl generator. It also passes
@@ -1096,18 +1096,18 @@ var xorshift7 = __webpack_require__(/*! ./lib/xorshift7 */ "../junze-generator/n
 // collisions.
 // Period: 2^4128-2^32.
 // No systematic BigCrush failures reported.
-var xor4096 = __webpack_require__(/*! ./lib/xor4096 */ "../junze-generator/node_modules/seedrandom/lib/xor4096.js");
+var xor4096 = __webpack_require__(/*! ./lib/xor4096 */ "./junze-generator/node_modules/seedrandom/lib/xor4096.js");
 
 // Tyche-i, by Samuel Neves and Filipe Araujo, is a bit-shifting random
 // number generator derived from ChaCha, a modern stream cipher.
 // https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
 // Period: ~2^127
 // No systematic BigCrush failures reported.
-var tychei = __webpack_require__(/*! ./lib/tychei */ "../junze-generator/node_modules/seedrandom/lib/tychei.js");
+var tychei = __webpack_require__(/*! ./lib/tychei */ "./junze-generator/node_modules/seedrandom/lib/tychei.js");
 
 // The original ARC4-based prng included in this library.
 // Period: ~2^1600
-var sr = __webpack_require__(/*! ./seedrandom */ "../junze-generator/node_modules/seedrandom/seedrandom.js");
+var sr = __webpack_require__(/*! ./seedrandom */ "./junze-generator/node_modules/seedrandom/seedrandom.js");
 
 sr.alea = alea;
 sr.xor128 = xor128;
@@ -1121,10 +1121,10 @@ module.exports = sr;
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/lib/alea.js":
-/*!*******************************************************!*\
-  !*** .-generator/node_modules/seedrandom/lib/alea.js ***!
-  \*******************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/lib/alea.js":
+/*!*************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/lib/alea.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1244,14 +1244,14 @@ if (module && module.exports) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../junze/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/lib/tychei.js":
-/*!*********************************************************!*\
-  !*** .-generator/node_modules/seedrandom/lib/tychei.js ***!
-  \*********************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/lib/tychei.js":
+/*!***************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/lib/tychei.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1360,14 +1360,14 @@ if (module && module.exports) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../junze/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/lib/xor128.js":
-/*!*********************************************************!*\
-  !*** .-generator/node_modules/seedrandom/lib/xor128.js ***!
-  \*********************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/lib/xor128.js":
+/*!***************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/lib/xor128.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1454,14 +1454,14 @@ if (module && module.exports) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../junze/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/lib/xor4096.js":
-/*!**********************************************************!*\
-  !*** .-generator/node_modules/seedrandom/lib/xor4096.js ***!
-  \**********************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/lib/xor4096.js":
+/*!****************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/lib/xor4096.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1613,14 +1613,14 @@ if (module && module.exports) {
   __webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js")   // present with an AMD loader
 );
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../junze/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/lib/xorshift7.js":
-/*!************************************************************!*\
-  !*** .-generator/node_modules/seedrandom/lib/xorshift7.js ***!
-  \************************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/lib/xorshift7.js":
+/*!******************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/lib/xorshift7.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1723,14 +1723,14 @@ if (module && module.exports) {
 );
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../junze/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/lib/xorwow.js":
-/*!*********************************************************!*\
-  !*** .-generator/node_modules/seedrandom/lib/xorwow.js ***!
-  \*********************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/lib/xorwow.js":
+/*!***************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/lib/xorwow.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1822,14 +1822,14 @@ if (module && module.exports) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../junze/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "../junze-generator/node_modules/seedrandom/seedrandom.js":
-/*!*********************************************************!*\
-  !*** .-generator/node_modules/seedrandom/seedrandom.js ***!
-  \*********************************************************/
+/***/ "./junze-generator/node_modules/seedrandom/seedrandom.js":
+/*!***************************************************************!*\
+  !*** ./junze-generator/node_modules/seedrandom/seedrandom.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2088,10 +2088,10 @@ if ( true && module.exports) {
 
 /***/ }),
 
-/***/ "../junze-generator/out/Context.js":
-/*!**********************************!*\
-  !*** .-generator/out/Context.js ***!
-  \**********************************/
+/***/ "./junze-generator/out/Context.js":
+/*!****************************************!*\
+  !*** ./junze-generator/out/Context.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2139,10 +2139,10 @@ exports.Context = Context;
 
 /***/ }),
 
-/***/ "../junze-generator/out/builtinFunctions.js":
-/*!*******************************************!*\
-  !*** .-generator/out/builtinFunctions.js ***!
-  \*******************************************/
+/***/ "./junze-generator/out/builtinFunctions.js":
+/*!*************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2159,13 +2159,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const registries_1 = __webpack_require__(/*! ./registries */ "../junze-generator/out/registries.js");
+const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/out/registries.js");
 
-const random_1 = __importDefault(__webpack_require__(/*! random */ "../junze-generator/node_modules/random/dist/esm/index.esm.js"));
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
 
-const juejuezi_1 = __importDefault(__webpack_require__(/*! ./lib/juejuezi */ "../junze-generator/out/lib/juejuezi.js"));
+const juejuezi_1 = __importDefault(__webpack_require__(/*! ./lib/juejuezi */ "./junze-generator/out/lib/juejuezi.js"));
 
-const rpnCalc_1 = __importDefault(__webpack_require__(/*! ./lib/rpnCalc */ "../junze-generator/out/lib/rpnCalc.js"));
+const rpnCalc_1 = __importDefault(__webpack_require__(/*! ./lib/rpnCalc */ "./junze-generator/out/lib/rpnCalc.js"));
 
 registries_1.functionRegistry.set('c', () => {
   return String.fromCharCode(random_1.default.int(0x4e00, 0x9fff));
@@ -2220,10 +2220,10 @@ registries_1.functionRegistry.set('r', (context, [type, min, max, digits]) => {
 
 /***/ }),
 
-/***/ "../junze-generator/out/errors.js":
-/*!*********************************!*\
-  !*** .-generator/out/errors.js ***!
-  \*********************************/
+/***/ "./junze-generator/out/errors.js":
+/*!***************************************!*\
+  !*** ./junze-generator/out/errors.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2285,10 +2285,10 @@ exports.throwInternalError = throwInternalError;
 
 /***/ }),
 
-/***/ "../junze-generator/out/index.js":
-/*!********************************!*\
-  !*** .-generator/out/index.js ***!
-  \********************************/
+/***/ "./junze-generator/out/index.js":
+/*!**************************************!*\
+  !*** ./junze-generator/out/index.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2300,13 +2300,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.registerCorpus = exports.generate = void 0;
 
-const Context_1 = __webpack_require__(/*! ./Context */ "../junze-generator/out/Context.js");
+const Context_1 = __webpack_require__(/*! ./Context */ "./junze-generator/out/Context.js");
 
-__webpack_require__(/*! ./builtinFunctions */ "../junze-generator/out/builtinFunctions.js");
+__webpack_require__(/*! ./builtinFunctions */ "./junze-generator/out/builtinFunctions.js");
 
-const registries_1 = __webpack_require__(/*! ./registries */ "../junze-generator/out/registries.js");
+const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/out/registries.js");
 
-const walkers_1 = __webpack_require__(/*! ./walkers */ "../junze-generator/out/walkers.js");
+const walkers_1 = __webpack_require__(/*! ./walkers */ "./junze-generator/out/walkers.js");
 
 function generate(pattern, date, enableEval) {
   let context = new Context_1.Context(pattern, date);
@@ -2336,10 +2336,10 @@ exports.registerCorpus = registerCorpus;
 
 /***/ }),
 
-/***/ "../junze-generator/out/lib/juejuezi.js":
-/*!***************************************!*\
-  !*** .-generator/out/lib/juejuezi.js ***!
-  \***************************************/
+/***/ "./junze-generator/out/lib/juejuezi.js":
+/*!*********************************************!*\
+  !*** ./junze-generator/out/lib/juejuezi.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2752,10 +2752,10 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ "../junze-generator/out/lib/rpnCalc.js":
-/*!**************************************!*\
-  !*** .-generator/out/lib/rpnCalc.js ***!
-  \**************************************/
+/***/ "./junze-generator/out/lib/rpnCalc.js":
+/*!********************************************!*\
+  !*** ./junze-generator/out/lib/rpnCalc.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2826,10 +2826,10 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ "../junze-generator/out/registries.js":
-/*!*************************************!*\
-  !*** .-generator/out/registries.js ***!
-  \*************************************/
+/***/ "./junze-generator/out/registries.js":
+/*!*******************************************!*\
+  !*** ./junze-generator/out/registries.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2845,10 +2845,10 @@ exports.corpusRegistry = new Map();
 
 /***/ }),
 
-/***/ "../junze-generator/out/walkers.js":
-/*!**********************************!*\
-  !*** .-generator/out/walkers.js ***!
-  \**********************************/
+/***/ "./junze-generator/out/walkers.js":
+/*!****************************************!*\
+  !*** ./junze-generator/out/walkers.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2866,13 +2866,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.parseEval = exports.parseEscape = exports.parseTag = exports.parseList = exports.parseArgs = exports.parseFunction = exports.parseTemplate = exports.parsePattern = void 0;
 
-const random_1 = __importDefault(__webpack_require__(/*! random */ "../junze-generator/node_modules/random/dist/esm/index.esm.js"));
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
 
-const Context_1 = __webpack_require__(/*! ./Context */ "../junze-generator/out/Context.js");
+const Context_1 = __webpack_require__(/*! ./Context */ "./junze-generator/out/Context.js");
 
-const errors_1 = __webpack_require__(/*! ./errors */ "../junze-generator/out/errors.js");
+const errors_1 = __webpack_require__(/*! ./errors */ "./junze-generator/out/errors.js");
 
-const registries_1 = __webpack_require__(/*! ./registries */ "../junze-generator/out/registries.js");
+const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/out/registries.js");
 
 function parsePattern(context, terminator) {
   let generated = '';
@@ -21841,7 +21841,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _junze_generator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../junze-generator */ "../junze-generator/out/index.js");
+/* harmony import */ var _junze_generator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../junze-generator */ "./junze-generator/out/index.js");
 /* harmony import */ var _junze_generator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_junze_generator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logger */ "./src/logger.js");
 /* harmony import */ var _registerInitAction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./registerInitAction */ "./src/registerInitAction.js");
@@ -21873,9 +21873,12 @@ document.getElementById('btn-generate').onclick = () => {
     } catch (e) {
       var _e$context;
 
-      _logger__WEBPACK_IMPORTED_MODULE_1__["logger"].dialog('生成时出现了一个错误', `位于列${e === null || e === void 0 ? void 0 : (_e$context = e.context) === null || _e$context === void 0 ? void 0 : _e$context.index}，错误描述是${e}`, {
+      _logger__WEBPACK_IMPORTED_MODULE_1__["logger"].dialog('生成时出现了一个错误', `位于列${(e === null || e === void 0 ? void 0 : (_e$context = e.context) === null || _e$context === void 0 ? void 0 : _e$context.index) + 1}，错误描述是${e}`, {
+        label: '确定',
+        action: () => {}
+      }, {
         label: '查看帮助',
-        action: 'tips.html' //TODO
+        action: 'readme.html#生成时错误' //TODO
 
       });
       break;
@@ -21906,11 +21909,11 @@ for (let i = 0; i < modifyTriggers.length; i++) {
 
   if (typeof modifyTrigger.selected === 'boolean') {
     modifyTrigger.onclick = () => {
-      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].save();
+      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].set();
     };
   } else {
     modifyTrigger.onchange = () => {
-      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].save();
+      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].set();
     };
   }
 }
@@ -22086,7 +22089,7 @@ document.onreadystatechange = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _junze_generator_out__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../junze-generator/out */ "../junze-generator/out/index.js");
+/* harmony import */ var _junze_generator_out__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../junze-generator/out */ "./junze-generator/out/index.js");
 /* harmony import */ var _junze_generator_out__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_junze_generator_out__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logger */ "./src/logger.js");
 /* harmony import */ var _registerInitAction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./registerInitAction */ "./src/registerInitAction.js");
@@ -22123,7 +22126,7 @@ async function syncNlpData() {
     snackbar.open = false;
     _logger__WEBPACK_IMPORTED_MODULE_1__["logger"].dialog('同步失败', e, {
       label: '查看帮助',
-      action: 'tips.html' //TODO
+      action: 'readme.html#词库同步错误' //TODO
 
     });
   }
@@ -22169,7 +22172,7 @@ class TemplateState {
     _defineProperty(this, "currentTemplateName", '_unsaved');
   }
 
-  save(name) {
+  set(name) {
     this.currentTemplateName = name || '_unsaved';
     let template = {
       pattern: document.getElementById('form-pattern').value,
@@ -22195,7 +22198,7 @@ class TemplateState {
     }
   }
 
-  changeTemplate(name) {
+  applyTemplate(name) {
     let template = this.get(name);
     if (!template) template = TemplateState.DEFAULT_TEMPLATE;
     this.currentTemplate = template;
@@ -22224,7 +22227,7 @@ _defineProperty(TemplateState, "DEFAULT_TEMPLATE", {
 const templateState = new TemplateState();
 Object(_registerInitAction__WEBPACK_IMPORTED_MODULE_0__["registerInitAction"])(() => {
   if (document.readyState === 'interactive') {
-    templateState.changeTemplate(localStorage.getItem('config-current-template'));
+    templateState.applyTemplate(localStorage.getItem('config-current-template'));
   }
 });
 
