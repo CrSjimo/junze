@@ -1,4 +1,4 @@
-import * as junze from '../../junze-generator'
+import * as junze from '../junze-generator'
 import { logger } from './logger';
 import { registerInitAction } from './registerInitAction';
 import { templateState } from './templateState';
@@ -25,9 +25,12 @@ document.getElementById('btn-generate').onclick = ()=>{
         try{
             generatedValues.push(junze.generate(pattern, date, enableEval));
         }catch(e){
-            logger.dialog('生成时出现了一个错误', `位于列${e?.context?.index}，错误描述是${e}`, {
+            logger.dialog('生成时出现了一个错误', `位于列${e?.context?.index+1}，错误描述是${e}`, {
+                label: '确定',
+                action: ()=>{},
+            }, {
                 label: '查看帮助',
-                action: 'tips.html'//TODO
+                action: 'readme.html#生成时错误'//TODO
             });
             break;
         }
@@ -50,9 +53,9 @@ let modifyTriggers = document.getElementsByClassName('modify-trigger');
 for(let i = 0; i < modifyTriggers.length; i++){
     let modifyTrigger = modifyTriggers[i];
     if((typeof modifyTrigger.selected) === 'boolean'){
-        modifyTrigger.onclick = ()=>{templateState.save()};
+        modifyTrigger.onclick = ()=>{templateState.set()};
     }else{
-        modifyTrigger.onchange = ()=>{templateState.save()};
+        modifyTrigger.onchange = ()=>{templateState.set()};
     }
 }
 document.getElementById('form-turns').onchange = ()=>{

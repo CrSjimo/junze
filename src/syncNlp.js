@@ -1,4 +1,4 @@
-import { registerCorpus } from "../../junze-generator/out";
+import { registerCorpus } from "../junze-generator/out";
 import { logger } from "./logger";
 import { registerInitAction } from "./registerInitAction";
 import { default as axios } from "axios";
@@ -28,7 +28,7 @@ async function syncNlpData(){
         snackbar.open = false;
         logger.dialog('同步失败', e, {
             label: '查看帮助',
-            action: 'tips.html'//TODO
+            action: 'readme.html#词库同步错误'//TODO
         });
     }
     

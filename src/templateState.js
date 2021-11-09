@@ -13,7 +13,7 @@ class TemplateState{
         enableHtml: false,
     }
 
-    save(name){
+    set(name){
         this.currentTemplateName = name || '_unsaved';
         let template = {
             pattern: document.getElementById('form-pattern').value,
@@ -42,7 +42,7 @@ class TemplateState{
 
     currentTemplateName = '_unsaved';
 
-    changeTemplate(name){
+    applyTemplate(name){
         let template = this.get(name);
         if(!template)template = TemplateState.DEFAULT_TEMPLATE;
         this.currentTemplate = template;
@@ -60,6 +60,6 @@ export const templateState = new TemplateState();
 
 registerInitAction(()=>{
     if(document.readyState === 'interactive'){
-        templateState.changeTemplate(localStorage.getItem('config-current-template'));
+        templateState.applyTemplate(localStorage.getItem('config-current-template'));
     }
 });
