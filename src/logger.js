@@ -52,7 +52,7 @@ class Logger {
         }
         document.body.appendChild(dialog);
         dialog.open = true;
-        dialog.onclose = ()=>dialog.remove();
+        dialog.addEventListener('CustomEvent',(ev)=>console.log(ev));
         return dialog;
     }
 }
