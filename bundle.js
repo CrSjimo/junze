@@ -21847,6 +21847,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _registerInitAction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./registerInitAction */ "./src/registerInitAction.js");
 /* harmony import */ var _templateState__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./templateState */ "./src/templateState.js");
 /* harmony import */ var _syncNlp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./syncNlp */ "./src/syncNlp.js");
+/* harmony import */ var _preset_saver__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./preset_saver */ "./src/preset_saver.js");
+
 
 
 
@@ -21909,11 +21911,13 @@ for (let i = 0; i < modifyTriggers.length; i++) {
 
   if (typeof modifyTrigger.selected === 'boolean') {
     modifyTrigger.onclick = () => {
-      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].set();
+      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].setUnsaved();
+      Object(_preset_saver__WEBPACK_IMPORTED_MODULE_5__["updateSelectorList"])();
     };
   } else {
     modifyTrigger.onchange = () => {
-      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].set();
+      _templateState__WEBPACK_IMPORTED_MODULE_3__["templateState"].setUnsaved();
+      Object(_preset_saver__WEBPACK_IMPORTED_MODULE_5__["updateSelectorList"])();
     };
   }
 }
@@ -21923,9 +21927,7 @@ document.getElementById('form-turns').onchange = () => {
 };
 
 Object(_registerInitAction__WEBPACK_IMPORTED_MODULE_2__["registerInitAction"])(() => {
-  if (document.readyState === 'interactive') {
-    document.getElementById('form-turns').value = localStorage.getItem('config-turns') || 1;
-  }
+  document.getElementById('form-turns').value = localStorage.getItem('config-turns') || 1;
 });
 
 /***/ }),
@@ -21951,12 +21953,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core */ "./src/core.js");
 /* harmony import */ var _toggle_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./toggle_input */ "./src/toggle_input.js");
 /* harmony import */ var _toggle_input__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_toggle_input__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _preset_saver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./preset_saver */ "./src/preset_saver.js");
 
 
 
 
 
  // import '@material/mwc-list';
+
 
 
 
@@ -22045,15 +22049,176 @@ class Logger {
 
     document.body.appendChild(dialog);
     dialog.open = true;
-
-    dialog.onclose = () => dialog.remove();
-
+    dialog.addEventListener('CustomEvent', ev => console.log(ev));
     return dialog;
   }
 
 }
 
 let logger = new Logger();
+
+/***/ }),
+
+/***/ "./src/preset_saver.js":
+/*!*****************************!*\
+  !*** ./src/preset_saver.js ***!
+  \*****************************/
+/*! exports provided: updateSelectorList */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSelectorList", function() { return updateSelectorList; });
+/* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logger */ "./src/logger.js");
+/* harmony import */ var _registerInitAction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./registerInitAction */ "./src/registerInitAction.js");
+/* harmony import */ var _templateState__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./templateState */ "./src/templateState.js");
+
+
+
+let savePresetButton = document.getElementById('btn-save-preset');
+let presetSelector = document.getElementById('select-preset');
+let openCollectionButton = document.getElementById('btn-collection');
+let collectionSelectList = document.getElementById('list-collection-select');
+
+savePresetButton.onclick = () => {
+  promptSave(_templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName);
+};
+
+function promptSave(templateName = _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName) {
+  document.getElementById('span-old-preset-name').textContent = _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].friendlyNameOf(templateName);
+  let inputPresetName = document.getElementById('input-preset-name');
+  inputPresetName.value = '';
+  inputPresetName.setCustomValidity('');
+  inputPresetName.helper = '';
+
+  inputPresetName.onchange = () => {
+    if (inputPresetName.value[0] === '_') {
+      inputPresetName.setCustomValidity('预设名称不能以下划线开头');
+    } else {
+      inputPresetName.setCustomValidity('');
+    }
+
+    if (_templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].listAllStates().includes(inputPresetName.value)) {
+      inputPresetName.helper = '将会覆盖已经存在的预设';
+      inputPresetName.helperPersistent = true;
+    } else {
+      inputPresetName.helper = '';
+    }
+  };
+
+  let dialog = document.getElementById('dialog-save');
+
+  document.getElementById('btn-save-determine').onclick = () => {
+    if (inputPresetName.reportValidity()) {
+      _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].setStoredPreset(inputPresetName.value, _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].getStoredPreset(templateName));
+      dialog.open = false;
+      _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName = inputPresetName.value;
+
+      if (templateName === _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_UNSAVED) {
+        _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].removeStoredPreset(_templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_UNSAVED);
+      }
+
+      updateSelectorList();
+    }
+  };
+
+  dialog.open = true;
+}
+
+openCollectionButton.onclick = () => {
+  document.getElementById('dialog-collection').open = true;
+};
+
+document.getElementById('btn-collection-delete').onclick = () => {
+  let deletion = collectionSelectList.selected.map(el => el.value);
+
+  for (let presetName of deletion) {
+    _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].removeStoredPreset(presetName);
+
+    if (presetName === _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName) {
+      _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName = _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_DEFAULT;
+    }
+  }
+
+  updateSelectorList();
+};
+
+let eventHolder = true;
+
+presetSelector.onchange = () => {
+  var _presetSelector$selec;
+
+  //console.log(eventHolder);
+  let newPresetName = (_presetSelector$selec = presetSelector.selected) === null || _presetSelector$selec === void 0 ? void 0 : _presetSelector$selec.value;
+  let oldPresetName = _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName; //console.log(newPresetName);
+
+  if (oldPresetName === newPresetName) return;
+
+  if (oldPresetName === _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_UNSAVED) {
+    _logger__WEBPACK_IMPORTED_MODULE_0__["logger"].dialog('提示', '当前模板尚未保存。如果不保存当前模板，那么在下次修改时，当前的修改都将会丢失。', {
+      label: '忽略',
+      action: () => {}
+    }, {
+      label: '保存',
+      action: () => {
+        promptSave(_templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_UNSAVED);
+      }
+    });
+    _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName = newPresetName;
+
+    if (!eventHolder) {
+      eventHolder = true;
+      return;
+    }
+
+    updateSelectorList();
+  } else {
+    _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName = newPresetName;
+
+    if (!eventHolder) {
+      eventHolder = true;
+      return;
+    }
+
+    updateSelectorList();
+  }
+};
+
+function updateSelectorList() {
+  let keys = _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].listAllStates();
+  keys.unshift(_templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_DEFAULT);
+  presetSelector.innerHTML = '';
+  collectionSelectList.innerHTML = '';
+
+  for (let i in keys) {
+    let presetName = keys[i]; //preset selector
+
+    let item = document.createElement('mwc-list-item');
+    item.value = presetName;
+    item.textContent = _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].friendlyNameOf(presetName);
+    presetSelector.appendChild(item);
+
+    if (presetName === _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].currentTemplateName) {
+      eventHolder = false;
+      item.selected = true;
+    } //collection select list
+
+
+    if (presetName === _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].PRESET_NAME_DEFAULT) continue;
+    item = document.createElement('mwc-check-list-item');
+    item.value = presetName;
+    item.twoline = true;
+    let primaryLine = document.createElement('span');
+    primaryLine.textContent = _templateState__WEBPACK_IMPORTED_MODULE_2__["TemplateState"].friendlyNameOf(presetName);
+    let secondaryLine = document.createElement('span');
+    secondaryLine.textContent = _templateState__WEBPACK_IMPORTED_MODULE_2__["templateState"].getStoredPreset(presetName).pattern;
+    secondaryLine.slot = 'secondary';
+    item.appendChild(primaryLine);
+    item.appendChild(secondaryLine);
+    collectionSelectList.appendChild(item);
+  }
+}
+Object(_registerInitAction__WEBPACK_IMPORTED_MODULE_1__["registerInitAction"])(updateSelectorList);
 
 /***/ }),
 
@@ -22157,26 +22322,40 @@ Object(_registerInitAction__WEBPACK_IMPORTED_MODULE_2__["registerInitAction"])(s
 /*!******************************!*\
   !*** ./src/templateState.js ***!
   \******************************/
-/*! exports provided: templateState */
+/*! exports provided: TemplateState, templateState */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TemplateState", function() { return TemplateState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "templateState", function() { return templateState; });
 /* harmony import */ var _registerInitAction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./registerInitAction */ "./src/registerInitAction.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-
 class TemplateState {
   constructor() {
-    _defineProperty(this, "currentTemplate", TemplateState.DEFAULT_TEMPLATE);
+    _defineProperty(this, "_currentTemplateName", TemplateState.DEFAULT_TEMPLATE);
 
-    _defineProperty(this, "currentTemplateName", '_unsaved');
+    _defineProperty(this, "_currentTemplate", TemplateState.DEFAULT_TEMPLATE);
   }
 
-  set(name) {
-    this.currentTemplateName = name || '_unsaved';
+  static friendlyNameOf(name) {
+    switch (name) {
+      case TemplateState.PRESET_NAME_DEFAULT:
+        return '默认模板';
+
+      case TemplateState.PRESET_NAME_UNSAVED:
+        return '未保存的模板';
+
+      default:
+        return name;
+    }
+  }
+
+  setUnsaved() {
+    this._currentTemplateName = TemplateState.PRESET_NAME_UNSAVED;
+    localStorage.setItem(TemplateState.KEY_CONFIG_CURRENT_PRESET, this.currentTemplateName);
     let template = {
       pattern: document.getElementById('form-pattern').value,
       date: {
@@ -22187,25 +22366,50 @@ class TemplateState {
       enableEval: document.getElementById('enable-eval').selected,
       enableHtml: document.getElementById('enable-html').selected
     };
-    localStorage.setItem(`template-${this.currentTemplateName}`, JSON.stringify(template));
-    localStorage.setItem('config-current-template', this.currentTemplateName);
+    this.setStoredPreset(this.currentTemplateName, template);
   }
 
-  get(name) {
+  setStoredPreset(name, template) {
+    localStorage.setItem(`template-${name}`, JSON.stringify(template));
+  }
+
+  getStoredPreset(name) {
     let rawValue = localStorage.getItem(`template-${name}`);
 
     if (!rawValue) {
       return undefined;
     } else {
-      return JSON.parse(rawValue);
+      try {
+        return JSON.parse(rawValue);
+      } catch (e) {
+        this.removeStoredPreset(name);
+        return undefined;
+      }
     }
   }
 
-  applyTemplate(name) {
-    let template = this.get(name);
+  removeStoredPreset(name) {
+    localStorage.removeItem(`template-${name}`);
+  }
+
+  get currentTemplateName() {
+    return this._currentTemplateName;
+  }
+
+  set currentTemplateName(name) {
+    if (!name) return;
+    let template = this.getStoredPreset(name);
     if (!template) template = TemplateState.DEFAULT_TEMPLATE;
     this.currentTemplate = template;
-    this.currentTemplateName = name || '_default';
+    this._currentTemplateName = name || TemplateState.PRESET_NAME_DEFAULT;
+    localStorage.setItem(TemplateState.KEY_CONFIG_CURRENT_PRESET, this.currentTemplateName);
+  }
+
+  get currentTemplate() {
+    return this._currentTemplate;
+  }
+
+  set currentTemplate(template) {
     document.getElementById('form-pattern').value = template.pattern;
     document.getElementById('form-date-year').value = template.date.year;
     document.getElementById('form-date-month').value = template.date.month;
@@ -22214,7 +22418,28 @@ class TemplateState {
     document.getElementById('enable-html').selected = template.enableHtml;
   }
 
+  listAllStates() {
+    let keys = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      let regExp = /^template-(.+)$/;
+
+      if (regExp.test(key)) {
+        keys.push(key.slice('template-'.length));
+      }
+    }
+
+    return keys.sort((a, b) => a === TemplateState.PRESET_NAME_UNSAVED ? 1 : b === TemplateState.PRESET_NAME_UNSAVED ? -1 : 0);
+  }
+
 }
+
+_defineProperty(TemplateState, "PRESET_NAME_UNSAVED", '_unsaved');
+
+_defineProperty(TemplateState, "PRESET_NAME_DEFAULT", '_default');
+
+_defineProperty(TemplateState, "KEY_CONFIG_CURRENT_PRESET", 'config-current-template');
 
 _defineProperty(TemplateState, "DEFAULT_TEMPLATE", {
   pattern: '俊泽不在的第%d天，%c他',
@@ -22229,9 +22454,7 @@ _defineProperty(TemplateState, "DEFAULT_TEMPLATE", {
 
 const templateState = new TemplateState();
 Object(_registerInitAction__WEBPACK_IMPORTED_MODULE_0__["registerInitAction"])(() => {
-  if (document.readyState === 'interactive') {
-    templateState.applyTemplate(localStorage.getItem('config-current-template'));
-  }
+  templateState.currentTemplateName = localStorage.getItem(TemplateState.KEY_CONFIG_CURRENT_PRESET) || TemplateState.PRESET_NAME_DEFAULT;
 });
 
 /***/ }),

@@ -18,15 +18,16 @@
         <div id="container">
             <main>
                 <section id="input-area">
-                    <!-- <div class="input-block">
+                    <div class="input-block">
                         <mwc-select
+                            id="select-preset"
                             class="block"
                             label="预设"
                             icon="list_alt"
                             outlined>
                             <mwc-list-item value='_default'>默认模板</mwc-list-item>
                         </mwc-select>
-                    </div> -->
+                    </div>
                     <div class="input-block input-horizontal-separated expandable">
                         <mwc-textfield
                             id="form-date-year"
@@ -82,6 +83,18 @@
                                 class="modify-trigger">启用HTML输出（可能存在潜在风险）</mwc-check-list-item>
                         </mwc-list>
                     </div>
+                    <div class="input-block input-horizontal-separated expandable">
+                        <mwc-button 
+                            id="btn-save-preset" 
+                            fullwidth 
+                            outlined 
+                            icon="save">保存预设</mwc-button>
+                        <mwc-button 
+                            id="btn-collection" 
+                            fullwidth 
+                            outlined 
+                            icon="bookmarks">预设管理器</mwc-button>
+                    </div>
                     <div class="input-block only-mobile">
                         <mwc-button id="btn-toggle" fullwidth icon="expand_less">收起输入区域</mwc-button>
                     </div>
@@ -96,6 +109,17 @@
                 </section>
             </main>
         </div>
+        <mwc-dialog id="dialog-save" heading="另存为">
+            <p>另存预设“<span id="span-old-preset-name"></span>”为</p>
+            <mwc-textfield id='input-preset-name' label="预设名称"></mwc-textfield>
+            <mwc-button id="btn-save-determine" slot="primaryAction">保存</mwc-button>
+            <mwc-button slot="secondaryAction" dialogaction="close">取消</mwc-button>
+        </mwc-dialog>
+        <mwc-dialog id="dialog-collection" heading="预设管理器">
+            <mwc-button id="btn-collection-delete" icon="delete" raised>删除</mwc-button>
+            <mwc-list id="list-collection-select" multi></mwc-list>
+            <mwc-button id="btn-collection-quit" slot="primaryAction" dialogaction="close">完成</mwc-button>
+        </mwc-dialog>
         <script src="bundle.js"></script>
     </body>
 </html>
