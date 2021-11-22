@@ -3,6 +3,7 @@ import { logger } from './logger';
 import { registerInitAction } from './registerInitAction';
 import { templateState } from './templateState';
 import './syncNlp';
+import { updateSelectorList } from './preset_saver';
 
 document.getElementById('btn-generate').onclick = ()=>{
     let enableEval = document.getElementById('enable-eval').selected;
@@ -53,16 +54,20 @@ let modifyTriggers = document.getElementsByClassName('modify-trigger');
 for(let i = 0; i < modifyTriggers.length; i++){
     let modifyTrigger = modifyTriggers[i];
     if((typeof modifyTrigger.selected) === 'boolean'){
-        modifyTrigger.onclick = ()=>{templateState.set()};
+        modifyTrigger.onclick = ()=>{
+            templateState.setUnsaved();
+            updateSelectorList();
+        };
     }else{
-        modifyTrigger.onchange = ()=>{templateState.set()};
+        modifyTrigger.onchange = ()=>{
+            templateState.setUnsaved();
+            updateSelectorList();
+        };
     }
 }
 document.getElementById('form-turns').onchange = ()=>{
     localStorage.setItem('config-turns', document.getElementById('form-turns').value);
 }
 registerInitAction(()=>{
-    if(document.readyState === 'interactive'){
         document.getElementById('form-turns').value = localStorage.getItem('config-turns') || 1;
-    }
 });
