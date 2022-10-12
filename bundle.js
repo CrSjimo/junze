@@ -2167,6 +2167,17 @@ const juejuezi_1 = __importDefault(__webpack_require__(/*! ./lib/juejuezi */ "./
 
 const rpnCalc_1 = __importDefault(__webpack_require__(/*! ./lib/rpnCalc */ "./junze-generator/out/lib/rpnCalc.js"));
 
+registries_1.functionRegistry.set('a', (context, args) => {
+  let array = JSON.parse(args[0]);
+
+  if (!(array instanceof Array)) {
+    throw new SyntaxError('Invalid array syntax.');
+  }
+
+  let index = parseInt(args[1]);
+  index = isNaN(index) ? random_1.default.int(0, array.length - 1) : index;
+  return array[index];
+});
 registries_1.functionRegistry.set('c', () => {
   return String.fromCharCode(random_1.default.int(0x4e00, 0x9fff));
 });
@@ -2998,7 +3009,7 @@ function parseList(context) {
     if (char === undefined) {
       errors_1.throwUnexpectedEndOfInput(context, ['}']);
     } else if (char === '}') {
-      return items[random_1.default.int(0, items.length - 1)];
+      return JSON.stringify(items);
     } else if (char === '{' || char === ',') {
       context.next();
       items.push(parsePattern(context, ',}'));
