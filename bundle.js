@@ -2224,6 +2224,9 @@ registries_1.functionRegistry.set('E', (context, args) => {
   let candidates = [].concat(...specifiedEmojiLists);
   return candidates[random_1.default.int(0, candidates.length - 1)];
 });
+registries_1.functionRegistry.set('i', (context, args) => {
+  return args[0] == false ? args[2] : args[1];
+});
 registries_1.functionRegistry.set('j', (context, args) => {
   return juejuezi_1.default(args[0], args[1]);
 });
@@ -2828,6 +2831,9 @@ function calc(a, b, op) {
 
     case '_':
       return a.toFixed(b);
+
+    case 'mod':
+      return a % b;
 
     default:
       throw new SyntaxError(`Invalid Operand: ${op}`);
