@@ -2110,9 +2110,15 @@ class Context {
     this._index = 0;
 
     if (typeof args[0] === 'string') {
-      let [pattern, date] = args;
+      let [pattern, date, env] = args;
       this.pattern = pattern;
       this.date = date;
+
+      if (env) {
+        for (let entry of env) {
+          this.variables.set(...entry);
+        }
+      }
     } else if (args[0] instanceof Context) {
       let [context, pattern] = args;
       this.date = context.date;
@@ -2342,8 +2348,8 @@ const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/
 
 const walkers_1 = __webpack_require__(/*! ./walkers */ "./junze-generator/out/walkers.js");
 
-function generate(pattern, date, enableEval) {
-  let context = new Context_1.Context(pattern, date);
+function generate(pattern, date, enableEval, env) {
+  let context = new Context_1.Context(pattern, date, env);
 
   if (enableEval) {
     return walkers_1.parseEval(context);
@@ -21889,6 +21895,48 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function initEnv(turnIndex, date) {
+  let env = new Map();
+  let today = new Date();
+  env.set('__t', {
+    value: turnIndex.toString(),
+    isTemplateMode: false
+  });
+  env.set('__year', {
+    value: date.getFullYear().toString(),
+    isTemplateMode: false
+  });
+  env.set('__month', {
+    value: (date.getMonth() + 1).toString(),
+    isTemplateMode: false
+  });
+  env.set('__date', {
+    value: date.getDate().toString(),
+    isTemplateMode: false
+  });
+  env.set('__day', {
+    value: date.getDay().toString(),
+    isTemplateMode: false
+  });
+  env.set('__today_year', {
+    value: today.getFullYear().toString(),
+    isTemplateMode: false
+  });
+  env.set('__today_month', {
+    value: (today.getMonth() + 1).toString(),
+    isTemplateMode: false
+  });
+  env.set('__today_date', {
+    value: today.getDate().toString(),
+    isTemplateMode: false
+  });
+  env.set('__today_day', {
+    value: today.getDay().toString(),
+    isTemplateMode: false
+  });
+  return env;
+}
+
 document.getElementById('btn-generate').onclick = () => {
   let enableEval = document.getElementById('enable-eval').selected;
   let enableHtml = document.getElementById('enable-html').selected;
@@ -21905,7 +21953,8 @@ document.getElementById('btn-generate').onclick = () => {
 
   for (let i = 0; i < turns; i++) {
     try {
-      generatedValues.push(_junze_generator__WEBPACK_IMPORTED_MODULE_0__["generate"](pattern, date, enableEval));
+      let env = initEnv(i, date);
+      generatedValues.push(_junze_generator__WEBPACK_IMPORTED_MODULE_0__["generate"](pattern, date, enableEval, env));
     } catch (e) {
       var _e$context;
 
