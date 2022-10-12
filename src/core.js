@@ -5,6 +5,48 @@ import { templateState } from './templateState';
 import './syncNlp';
 import { updateSelectorList } from './preset_saver';
 
+function initEnv(turnIndex, date){
+    let env = new Map();
+    let today = new Date();
+    env.set('__t', {
+        value: turnIndex.toString(),
+        isTemplateMode: false
+    });
+    env.set('__year', {
+        value: date.getFullYear().toString(),
+        isTemplateMode: false
+    });
+    env.set('__month', {
+        value: (date.getMonth()+1).toString(),
+        isTemplateMode: false
+    });
+    env.set('__date', {
+        value: date.getDate().toString(),
+        isTemplateMode: false
+    });
+    env.set('__day', {
+        value: date.getDay().toString(),
+        isTemplateMode: false
+    });
+    env.set('__today_year', {
+        value: today.getFullYear().toString(),
+        isTemplateMode: false
+    });
+    env.set('__today_month', {
+        value: (today.getMonth()+1).toString(),
+        isTemplateMode: false
+    });
+    env.set('__today_date', {
+        value: today.getDate().toString(),
+        isTemplateMode: false
+    });
+    env.set('__today_day', {
+        value: today.getDay().toString(),
+        isTemplateMode: false
+    });
+    return env;
+}
+
 document.getElementById('btn-generate').onclick = ()=>{
     let enableEval = document.getElementById('enable-eval').selected;
     let enableHtml = document.getElementById('enable-html').selected;
@@ -24,7 +66,8 @@ document.getElementById('btn-generate').onclick = ()=>{
     let generatedValues = [];
     for(let i = 0; i < turns; i++){
         try{
-            generatedValues.push(junze.generate(pattern, date, enableEval));
+            let env = initEnv(i,date);
+            generatedValues.push(junze.generate(pattern, date, enableEval, env));
         }catch(e){
             logger.dialog('生成时出现了一个错误', `位于列${e?.context?.index+1}，错误描述是${e}`, {
                 label: '确定',
