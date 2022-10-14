@@ -2145,10 +2145,30 @@ exports.Context = Context;
 
 /***/ }),
 
-/***/ "./junze-generator/out/builtinFunctions.js":
-/*!*************************************************!*\
-  !*** ./junze-generator/out/builtinFunctions.js ***!
-  \*************************************************/
+/***/ "./junze-generator/out/builtinFunctions/#_hashtag.js":
+/*!***********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/#_hashtag.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('#', () => '');
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/A_array_operate.js":
+/*!*****************************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/A_array_operate.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2165,42 +2185,115 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/out/registries.js");
+const boolToValue_1 = __importDefault(__webpack_require__(/*! ../lib/boolToValue */ "./junze-generator/out/lib/boolToValue.js"));
 
-const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
+const listFormat_1 = __importDefault(__webpack_require__(/*! ../lib/listFormat */ "./junze-generator/out/lib/listFormat.js"));
 
-const juejuezi_1 = __importDefault(__webpack_require__(/*! ./lib/juejuezi */ "./junze-generator/out/lib/juejuezi.js"));
+const listParse_1 = __importDefault(__webpack_require__(/*! ../lib/listParse */ "./junze-generator/out/lib/listParse.js"));
 
-const rpnCalc_1 = __importDefault(__webpack_require__(/*! ./lib/rpnCalc */ "./junze-generator/out/lib/rpnCalc.js"));
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
-registries_1.functionRegistry.set('a', (context, args) => {
-  let array = JSON.parse(args[0]);
+registries_1.functionRegistry.set('A', (context, args) => {
+  let array = listParse_1.default(args[0]);
 
-  if (!(array instanceof Array)) {
-    throw new SyntaxError('Invalid array syntax.');
+  switch (args[1]) {
+    case 'concat':
+      return listFormat_1.default(array.concat(...listParse_1.default(args[2])));
+
+    case 'slice':
+      let [l, r] = args.slice(2).map(parseInt).map(a => isNaN(a) ? undefined : a);
+      return listFormat_1.default(array.slice(l, r));
+
+    case 'indexOf':
+      {
+        let index = parseInt(args[3]);
+        index = isNaN(index) ? undefined : index;
+        return array.indexOf(args[2], index);
+      }
+
+    case 'lastIndexOf':
+      {
+        let item = args[2];
+        let index = parseInt(args[3]);
+        index = isNaN(index) ? undefined : index;
+        return array.indexOf(item, index);
+      }
+
+    case 'length':
+      return array.length;
+
+    case 'includes':
+      {
+        let item = args[2];
+        let index = parseInt(args[3]);
+        index = isNaN(index) ? undefined : index;
+        return boolToValue_1.default(array.includes(item, index));
+      }
+
+    default:
+      throw new SyntaxError('Invalid operation.');
   }
+});
 
-  let index = parseInt(args[1]);
-  index = isNaN(index) ? random_1.default.int(0, array.length - 1) : index;
-  return array[index];
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/C_calculate.js":
+/*!*************************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/C_calculate.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-registries_1.functionRegistry.set('c', () => {
-  return String.fromCharCode(random_1.default.int(0x4e00, 0x9fff));
-});
+
+const rpnCalc_1 = __importDefault(__webpack_require__(/*! ../lib/rpnCalc */ "./junze-generator/out/lib/rpnCalc.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
 registries_1.functionRegistry.set('C', (context, args) => {
   return rpnCalc_1.default(...args.map(v => {
     let n = parseFloat(v);
     if (isNaN(n)) return v;else return n;
   }));
 });
-registries_1.functionRegistry.set('d', context => {
-  if (!context.date) context.date = new Date('2021/04/28');
-  return Math.floor((Date.now() - Number(context.date)) / (1000 * 86400));
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/E_emoji.js":
+/*!*********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/E_emoji.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-registries_1.functionRegistry.set('e', context => {
-  if (!context.date) context.date = new Date('2021/04/28');
-  return -Math.floor((Date.now() - Number(context.date)) / (1000 * 86400));
-});
+
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
 const EMOJI_CATEGORY_LIST = '😀,😃,😄,😁,😆,😅,😂,🤣,😇,😉,😊,🙂,🙃,☺,😋,😌,😍,🥰,😘,😗,😙,😚,🥲,🤪,😜,😝,😛,🤑,😎,🤓,🥸,🧐,🤠,🥳,🤗,🤡,😏,😶,😐,😑,😒,🙄,🤨,🤔,🤫,🤭,🤥,😳,😞,😟,😠,😡,🤬,😔,😕,🙁,☹,😬,🥺,😣,😖,😫,😩,🥱,😤,😮‍💨,😮,😱,😨,😰,😯,😦,😧,😢,😥,😪,🤤,😓,😭,🤩,😵,😵‍💫,🥴,😲,🤯,🤐,😷,🤕,🤒,🤮,🤢,🤧,🥵,🥶,😶‍🌫️,😴,💤,😈,👿,👹,👺,💩,👻,💀,☠,👽,🤖,🎃,😺,😸,😹,😻,😼,😽,🙀,😿,😾,👐,🤲,🙌,👏,🙏,🤝,👍,👎,👊,✊,🤛,🤜,🤞,✌,🤘,🤟,👌,🤌,🤏,👈,👉,👆,👇,☝,✋,🤚,🖐,🖖,👋,🤙,💪,🦾,🖕,✍,🤳,💅,🦵,🦿,🦶,👄,🦷,👅,👂,🦻,👃,👁,👀,🧠,🫀,🫁,🦴,👤,👥,🗣,🫂,👶,👧,🧒,👦,👩,🧑,👨,👩‍🦱,🧑‍🦱,👨‍🦱,👩‍🦰,🧑‍🦰,👨‍🦰,👱‍♀️,👱,👱‍♂️,👩‍🦳,🧑‍🦳,👨‍🦳,👩‍🦲,🧑‍🦲,👨‍🦲,🧔‍♀️,🧔,🧔‍♂️,👵,🧓,👴,👲,👳‍♀️,👳,👳‍♂️,🧕,👼,👸,🤴,👰,👰‍♀️,👰‍♂️,🤵‍♀️,🤵,🤵‍♂️,🙇‍♀️,🙇,🙇‍♂️,💁‍♀️,💁,💁‍♂️,🙅‍♀️,🙅,🙅‍♂️,🙆‍♀️,🙆,🙆‍♂️,🤷‍♀️,🤷,🤷‍♂️,🙋‍♀️,🙋,🙋‍♂️,🤦‍♀️,🤦,🤦‍♂️,🧏‍♀️,🧏,🧏‍♂️,🙎‍♀️,🙎,🙎‍♂️,🙍‍♀️,🙍,🙍‍♂️,💇‍♀️,💇,💇‍♂️,💆‍♀️,💆,💆‍♂️,🤰,🤱,👩‍🍼,🧑‍🍼,👨‍🍼,🧎‍♀️,🧎,🧎‍♂️,🧍‍♀️,🧍,🧍‍♂️,🚶‍♀️,🚶,🚶‍♂️,👩‍🦯,🧑‍🦯,👨‍🦯,🏃‍♀️,🏃,🏃‍♂️,👩‍🦼,🧑‍🦼,👨‍🦼,👩‍🦽,🧑‍🦽,👨‍🦽,💃,🕺,👫,👭,👬,🧑‍🤝‍🧑,👩‍❤️‍👨,👩‍❤️‍👩,💑,👨‍❤️‍👨,👩‍❤️‍💋‍👨,👩‍❤️‍💋‍👩,💏,👨‍❤️‍💋‍👨,❤,🧡💛,💚,💙,💜,🤎,🖤,🤍,💔,❣,💕,💞,💓,💗,💖,💘,💝,❤️‍🔥,❤️‍🩹,💟;🐶,🐱,🐭,🐹,🐰,🐻,🧸,🐼,🐻‍❄️,🐨,🐯,🦁,🐮,🐷,🐽,🐸,🐵,🙈,🙉,🙊,🐒,🦍,🦧,🐔,🐧,🐦,🐤,🐣,🐥,🐺,🦊,🦝,🐗,🐴,🦓,🦒,🦌,🦘,🦥,🦦,🦫,🦄,🐝,🐛,🦋,🐌,🪲,🐞,🐜,🦗,🪳,🕷,🕸,🦂,🦟,🪰,🪱,🦠,🐢,🐍,🦎,🐙,🦑,🦞,🦀,🦐,🦪,🐠,🐟,🐡,🐬,🦈,🦭,🐳,🐋,🐊,🐆,🐅,🐃,🐂,🐄,🦬,🐪,🐫,🦙,🐘,🦏,🦛,🦣,🐐,🐏,🐑,🐎,🐖,🦇,🐓,🦃,🕊,🦅,🦆,🦢,🦉,🦩,🦚,🦜,🦤,🪶,🐕,🦮,🐕‍🦺,🐩,🐈,🐈‍⬛,🐇,🐀,🐁,🐿,🦨,🦡,🦔,🐾,🐉,🐲,🦕,🦖,🌵,🎄,🌲,🌳,🌴,🪴,🌱,🌿,☘,🍀,🎍,🎋,🍃,🍂,🍁,🌾,🌺,🌻,🌹,🥀,🌷,🌼,🌸,💐,🍄,🌰,🐚,🌎,🌍,🌏,🌕,🌖,🌗,🌘,🌑,🌒,🌓,🌔,🌙,🌚,🌝,🌛,🌜,⭐,🌟,💫,✨,☄,🪐,🌞,☀,🌤,⛅,🌥,🌦,☁,🌧,⛈,🌩,⚡,🔥,💥,❄,🌨,☃,⛄,🌬,💨,🌪,🌫,🌈,☔,💧,💦,🌊;🍏,🍎,🍐,🍊,🍋,🍌,🍉,🍇,🍓,🍈,🍒,🫐,🍑,🥭,🍍,🥥,🥝,🍅,🥑,🫒,🍆,🌶,🫑,🥒,🥬,🥦,🧄,🧅,🌽,🥕,🥗,🥔,🍠,🥜,🍯,🍞,🥐,🥖,🫓,🥨,🥯,🥞,🧇,🧀,🍗,🍖,🥩,🍤,🥚,🍳,🥓,🍔,🍟,🌭,🍕,🍝,🥪,🌮,🌯,🫔,🥙,🧆,🍜,🥘,🍲,🫕,🥫,🧂,🧈,🍥,🍣,🍱,🍛,🍙,🍚,🍘,🥟,🍢,🍡,🍧,🍨,🍦,🍰,🎂,🧁,🥧,🍮,🍭,🍬,🍫,🍿,🍩,🍪,🥠,🥮,☕,🍵,🫖,🥣,🍼,🥤,🧋,🧃,🧉,🥛,🍺,🍻,🍷,🥂,🥃,🍸,🍹,🍾,🍶,🧊,🥄,🍴,🍽,🥢,🥡;⚽,🏀,🏈,⚾,🥎,🎾,🏐,🏉,🎱,🥏,🪃,🏓,🏸,🥅,🏒,🏑,🏏,🥍,🥌,⛳,🏹,🎣,🤿,🥊,🥋,⛸,🎿,🛷,⛷,🏂,🏋️‍♀️,🏋,🏋️‍♂️,🤺,🤼‍♀️,🤼,🤼‍♂️,🤸‍♀️,🤸,🤸‍♂️,⛹️‍♀️,⛹,⛹️‍♂️,🤾‍♀️,🤾,🤾‍♂️,🧗‍♀️,🧗,🧗‍♂️,🏌️‍♀️,🏌,🏌️‍♂️,🧘‍♀️,🧘,🧘‍♂️,🧖‍♀️,🧖,🧖‍♂️,🏄‍♀️,🏄,🏄‍♂️,🏊‍♀️,🏊,🏊‍♂️,🤽‍♀️,🤽,🤽‍♂️,🚣‍♀️,🚣,🚣‍♂️,🏇,🚴‍♀️,🚴,🚴‍♂️,🚵‍♀️,🚵,🚵‍♂️,🎽,🎖,🏅,🥇,🥈,🥉,🏆,🏵,🎗,🎫,🎟,🎪,🤹‍♀️,🤹,🤹‍♂️,🎭,🎨,🎬,🎤,🎧,🎼,🎹,🪗,🥁,🪘,🎷,🎺,🎸,🪕,🎻,🎲,🧩,♟,🎯,🎳,🪀,🪁,🎮,👾,🎰,👮‍♀️,👮,👮‍♂️,👩‍🚒,🧑‍🚒,👨‍🚒,👷‍♀️,👷,👷‍♂️,👩‍🏭,🧑‍🏭,👨‍🏭,👩‍🔧,🧑‍🔧,👨‍🔧,👩‍🌾,🧑‍🌾,👨‍🌾,👩‍🍳,🧑‍🍳,👨‍🍳,👩‍🎤,🧑‍🎤,👨‍🎤,👩‍🎨,🧑‍🎨,👨‍🎨,👩‍🏫,🧑‍🏫,👨‍🏫,👩‍🎓,🧑‍🎓,👨‍🎓,👩‍💼,🧑‍💼,👨‍💼,👩‍💻,🧑‍💻,👨‍💻,👩‍🔬,🧑‍🔬,👨‍🔬,👩‍🚀,🧑‍🚀,👨‍🚀,👩‍⚕️,🧑‍⚕️,👨‍⚕️,👩‍⚖️,🧑‍⚖️,👨‍⚖️,👩‍✈️,🧑‍✈️,👨‍✈️,💂‍♀️,💂,💂‍♂️,🥷,🕵️‍♀️,🕵,🕵️‍♂️,🤶,🧑‍🎄,🎅,🕴️‍♀️,🕴,🕴️‍♂️,🦸‍♀️,🦸,🦸‍♂️,🦹‍♀️,🦹,🦹‍♂️,🧙‍♀️,🧙,🧙‍♂️,🧝‍♀️,🧝,🧝‍♂️,🧚‍♀️,🧚,🧚‍♂️,🧞‍♀️,🧞,🧞‍♂️,🧜‍♀️,🧜,🧜‍♂️,🧛‍♀️,🧛,🧛‍♂️,🧟‍♀️,🧟,🧟‍♂️,👯‍♀️,👯,👯‍♂️,👪,👨‍👩‍👧,👨‍👩‍👧‍👦,👨‍👩‍👦‍👦,👨‍👩‍👧‍👧,👩‍👩‍👦,👩‍👩‍👧,👩‍👩‍👧‍👦,👩‍👩‍👦‍👦,👩‍👩‍👧‍👧,👨‍👨‍👦,👨‍👨‍👧,👨‍👨‍👧‍👦,👨‍👨‍👦‍👦,👨‍👨‍👧‍👧,👩‍👦,👩‍👧,👩‍👧‍👦,👩‍👦‍👦,👩‍👧‍👧,👨‍👦,👨‍👧,👨‍👧‍👦,👨‍👦‍👦,👨‍👧‍👧;🚗,🚙,🚕,🛺,🚌,🚎,🏎,🚓,🚑,🚒,🚐,🛻,🚚,🚛,🚜,🏍,🛵,🚲,🦼,🦽,🛴,🛹,🛼,🚨,🚔,🚍,🚘,🚖,🚡,🚠,🚟,🚃,🚋,🚝,🚄,🚅,🚈,🚞,🚂,🚆,🚇,🚊,🚉,🚁,🛩,✈,🛫,🛬,🪂,💺,🛰,🚀,🛸,🛶,⛵,🛥,🚤,⛴,🛳,🚢,⚓,⛽,🚧,🚏,🚦,🚥,🛑,🎡,🎢,🎠,🏗,🌁,🗼,🏭,⛲,🎑,⛰,🏔,🗻,🌋,🗾,🏕,⛺,🏞,🛣,🛤,🌅,🌄,🏜,🏖,🏝,🌇,🌆,🏙,🌃,🌉,🌌,🌠,🎇,🎆,🛖,🏘,🏰,🏯,🏟,🗽,🏠,🏡,🏚,🏢,🏬,🏣,🏤,🏥,🏦,🏨,🏪,🏫,🏩,💒,🏛,⛪,🕌,🛕,🕍,🕋,⛩;⌚,📱,📲,💻,⌨,🖥,🖨,🖱,🖲,🕹,🗜,💽,💾,💿,📀,📼,📷,📸,📹,🎥,📽,🎞,📞,☎,📟,📠,📺,📻,🎙,🎚,🎛,⏱,⏲,⏰,🕰,⏳,⌛,🧮,📡,🔋,🔌,💡,🔦,🕯,🧯,🗑,🛢,🛒,💸,💵,💴,💶,💷,💰,🪙,💳,🧾,💎,⚖,🦯,🧰,🔧,🪛,🔨,⚒,🛠,⛏,🪓,🪚,🔩,⚙,⛓,🪝,🪜,🧱,🪨,🪵,🔫,🧨,💣,🔪,🗡,⚔,🛡,🚬,⚰,🪦,⚱,🏺,🔮,🪄,📿,🧿,💈,🧲,⚗,🧪,🧫,🧬,🔭,🔬,🕳,💊,💉,🩸,🩹,🩺,🌡,🏷,🔖,🚽,🪠,🚿,🛁,🛀,🪥,🪒,🧴,🧻,🧼,🧽,🧹,🧺,🪣,🔑,🗝,🪤,🛋,🪑,🛌,🛏,🚪,🪞,🪟,🧳,🛎,🖼,🧭,🗺,⛱,🗿,🛍,🎈,🎏,🎀,🧧,🎁,🎊,🎉,🪅,🪆,🎎,🎐,🏮,🪔,✉,📩,📨,📧,💌,📮,📪,📫,📬,📭,📦,📯,📥,📤,📜,📃,📑,📊,📈,📉,📄,📅,📆,🗓,📇,🗃,🗳,🗄,📋,🗒,📁,📂,🗂,🗞,📰,🪧,📓,📕,📗,📘,📙,📔,📒,📚,📖,🔗,📎,🖇,✂,📐,📏,📌,📍,🧷,🪡,🧵,🧶,🪢,🔐,🔒,🔓,🔏,🖊,🖋,✒,📝,✏,🖍,🖌,🔍,🔎,👚,👕,🥼,🦺,🧥,👖,👔,👗,👘,🥻,🩱,👙,🩲,🩳,💄,💋,👣,🧦,🩴,👠,👡,👢,🥿,👞,👟,🩰,🥾,🧢,👒,🎩,🎓,👑,⛑,🪖,🎒,👝,👛,👜,💼,👓,🕶,🥽,🧣,🧤,💍,🌂,☂;☮,✝,☪,🕉,☸,✡,🔯,🕎,☯,☦,🛐,⛎,♈,♉,♊,♋,♌,♍,♎,♏,♐,♑,♒,♓,🆔,⚛,⚕,☢,☣,📴,📳,🈶,🈚,🈸,🈺,🈷,✴,🆚,🉑,💮,🉐,㊙,㊗,🈴,🈵,🈹,🈲,🅰,🅱,🆎,🆑,🅾,🆘,⛔,📛,🚫,❌,⭕,💢,♨,🚷,🚯,🚳,🚱,🔞,📵,🚭,❗,❕,❓,❔,‼,⁉,💯,🔅,🔆,🔱,⚜,〽,⚠,🚸,🔰,♻,🈯,💹,❇,✳,❎,✅,💠,🌀,➿,🌐,♾,Ⓜ,🏧,🚾,♿,🅿,🈳,🈂,🛂,🛃,🛄,🛅,🚰,🛗,🚹,♂,🚺,♀,⚧,🚼,🚻,🚮,🎦,📶,🈁,🆖,🆗,🆙,🆒,🆕,🆓,0⃣,1⃣,2⃣,3⃣,4⃣,5⃣,6⃣,7⃣,8⃣,9⃣,🔟,🔢,▶,⏸,⏯,⏹,⏺,⏏,⏭,⏮,⏩,⏪,🔀,🔁,🔂,◀,🔼,🔽,⏫,⏬,➡,⬅,⬆,⬇,↗,↘,↙,↖,↕,↔,🔄,↪,↩,🔃,⤴,⤵,#⃣,*⃣,ℹ,🔤,🔡,🔠,🔣,🎵,🎶,〰,➰,✔,➕,➖,➗,✖,💲,💱,©,®,™,🔚,🔙,🔛,🔝,🔜,☑,🔘,🔴,🟠,🟡,🟢,🔵,🟣,🟤,⚫,⚪,🟥,🟧,🟨,🟩,🟦,🟪,🟫,⬛,⬜,◼,◻,◾,◽,▪,▫,🔸,🔹,🔶,🔷,🔺,🔻,🔲,🔳,🔈,🔉,🔊,🔇,📣,📢,🔔,🔕,🃏,🀄,♠,♣,♥,♦,🎴,👁‍🗨,🗨,💭,🗯,💬,🕐,🕑,🕒,🕓,🕔,🕕,🕖,🕗,🕘,🕙,🕚,🕛,🕜,🕝,🕞,🕟,🕠,🕡,🕢,🕣,🕤,🕥,🕦,🕧;🏳,🏴,🏁,🚩,🎌,🏴‍☠️,🏳️‍🌈,🏳️‍⚧️'.split(';');
 const EMOJI_LIST = {
   p: EMOJI_CATEGORY_LIST[0].split(','),
@@ -2224,12 +2317,429 @@ registries_1.functionRegistry.set('E', (context, args) => {
   let candidates = [].concat(...specifiedEmojiLists);
   return candidates[random_1.default.int(0, candidates.length - 1)];
 });
-registries_1.functionRegistry.set('i', (context, args) => {
-  return args[0] == false ? args[2] : args[1];
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/L_logic_calculate.js":
+/*!*******************************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/L_logic_calculate.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+
+const logicCalc_1 = __importDefault(__webpack_require__(/*! ../lib/logicCalc */ "./junze-generator/out/lib/logicCalc.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('L', (context, args) => {
+  return logicCalc_1.default(args[0], args[1], args[2]);
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/R_range.js":
+/*!*********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/R_range.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const listStringify_1 = __importDefault(__webpack_require__(/*! ../lib/listStringify */ "./junze-generator/out/lib/listStringify.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('R', (context, args) => {
+  let [l, r, step = 1] = args.map(parseFloat);
+  let a = [];
+
+  for (let i = l; i < r; i += step) {
+    a.push(i);
+  }
+
+  return listStringify_1.default(a);
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/W_do_while.js":
+/*!************************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/W_do_while.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
+
+const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
+
+registries_1.functionRegistry.set('w', (context, args) => {
+  let result = '';
+  let conditionTemplate = context.variables.get(args[0]);
+  let variableStorage = context.variables.get(args[1]);
+
+  if (conditionTemplate) {
+    do {
+      if (variableStorage) {
+        result += walkers_1.parsePattern(new Context_1.Context(context, variableStorage.value));
+      }
+    } while (toBool_1.default(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value))));
+  }
+
+  return result;
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/a_array.js":
+/*!*********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/a_array.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
+
+const listParse_1 = __importDefault(__webpack_require__(/*! ../lib/listParse */ "./junze-generator/out/lib/listParse.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('a', (context, args) => {
+  let array = listParse_1.default(args[0]);
+  let index = parseInt(args[1]);
+  index = isNaN(index) ? random_1.default.int(0, array.length - 1) : index;
+  return array[index];
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/c_character.js":
+/*!*************************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/c_character.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('c', () => {
+  return String.fromCharCode(random_1.default.int(0x4e00, 0x9fff));
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/d_date.js":
+/*!********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/d_date.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('d', context => {
+  if (!context.date) context.date = new Date('2021/04/28');
+  return Math.floor((Date.now() - Number(context.date)) / (1000 * 86400));
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/e_date.js":
+/*!********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/e_date.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('e', context => {
+  if (!context.date) context.date = new Date('2021/04/28');
+  return -Math.floor((Date.now() - Number(context.date)) / (1000 * 86400));
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/f_foreach.js":
+/*!***********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/f_foreach.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
+
+const listParse_1 = __importDefault(__webpack_require__(/*! ../lib/listParse */ "./junze-generator/out/lib/listParse.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
+
+registries_1.functionRegistry.set('f', (context, args) => {
+  let result = '';
+  let array = listParse_1.default(args[0]);
+  let iteratorVariableReference = args[1];
+  let variableStorage = context.variables.get(args[2]);
+
+  for (let x of array) {
+    context.variables.set(iteratorVariableReference, {
+      isTemplateMode: false,
+      value: x
+    });
+
+    if (variableStorage) {
+      result += walkers_1.parsePattern(new Context_1.Context(context, variableStorage.value));
+    }
+  }
+
+  return result;
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/i_if.js":
+/*!******************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/i_if.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
+
+const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
+
+registries_1.functionRegistry.set('i', (context, args) => {
+  let conditionTemplate = context.variables.get(args[0]);
+  let trueVariableStorage = context.variables.get(args[1]);
+  let falseVariableStorage = context.variables.get(args[2]);
+
+  if (conditionTemplate && toBool_1.default(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value)))) {
+    return trueVariableStorage ? walkers_1.parsePattern(new Context_1.Context(context, trueVariableStorage.value)) : '';
+  } else {
+    return falseVariableStorage ? walkers_1.parsePattern(new Context_1.Context(context, falseVariableStorage.value)) : '';
+  }
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/index.js":
+/*!*******************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/index.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+__webpack_require__(/*! ./#_hashtag */ "./junze-generator/out/builtinFunctions/#_hashtag.js");
+
+__webpack_require__(/*! ./a_array */ "./junze-generator/out/builtinFunctions/a_array.js");
+
+__webpack_require__(/*! ./A_array_operate */ "./junze-generator/out/builtinFunctions/A_array_operate.js");
+
+__webpack_require__(/*! ./C_calculate */ "./junze-generator/out/builtinFunctions/C_calculate.js");
+
+__webpack_require__(/*! ./c_character */ "./junze-generator/out/builtinFunctions/c_character.js");
+
+__webpack_require__(/*! ./d_date */ "./junze-generator/out/builtinFunctions/d_date.js");
+
+__webpack_require__(/*! ./e_date */ "./junze-generator/out/builtinFunctions/e_date.js");
+
+__webpack_require__(/*! ./E_emoji */ "./junze-generator/out/builtinFunctions/E_emoji.js");
+
+__webpack_require__(/*! ./f_foreach */ "./junze-generator/out/builtinFunctions/f_foreach.js");
+
+__webpack_require__(/*! ./i_if */ "./junze-generator/out/builtinFunctions/i_if.js");
+
+__webpack_require__(/*! ./j_juejuezi */ "./junze-generator/out/builtinFunctions/j_juejuezi.js");
+
+__webpack_require__(/*! ./L_logic_calculate */ "./junze-generator/out/builtinFunctions/L_logic_calculate.js");
+
+__webpack_require__(/*! ./n_nlp */ "./junze-generator/out/builtinFunctions/n_nlp.js");
+
+__webpack_require__(/*! ./r_random */ "./junze-generator/out/builtinFunctions/r_random.js");
+
+__webpack_require__(/*! ./R_range */ "./junze-generator/out/builtinFunctions/R_range.js");
+
+__webpack_require__(/*! ./W_do_while */ "./junze-generator/out/builtinFunctions/W_do_while.js");
+
+__webpack_require__(/*! ./w_while */ "./junze-generator/out/builtinFunctions/w_while.js");
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/j_juejuezi.js":
+/*!************************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/j_juejuezi.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const juejuezi_1 = __importDefault(__webpack_require__(/*! ../lib/juejuezi */ "./junze-generator/out/lib/juejuezi.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
 registries_1.functionRegistry.set('j', (context, args) => {
   return juejuezi_1.default(args[0], args[1]);
 });
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/n_nlp.js":
+/*!*******************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/n_nlp.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
 registries_1.functionRegistry.set('n', (context, args) => {
   let words = [];
 
@@ -2245,6 +2755,33 @@ registries_1.functionRegistry.set('n', (context, args) => {
 
   return words[random_1.default.int(0, words.length - 1)];
 });
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/r_random.js":
+/*!**********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/r_random.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
 registries_1.functionRegistry.set('r', (context, [type, min, max, digits]) => {
   if (type === 'int') {
     return random_1.default.int(parseInt(min), parseInt(max)).toString();
@@ -2259,6 +2796,58 @@ registries_1.functionRegistry.set('r', (context, [type, min, max, digits]) => {
   } else {
     throw new Error(`Unknown random type: ${type}`);
   }
+});
+
+/***/ }),
+
+/***/ "./junze-generator/out/builtinFunctions/w_while.js":
+/*!*********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/w_while.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
+
+const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
+
+registries_1.functionRegistry.set('w', (context, args) => {
+  let result = '';
+  let conditionTemplate = context.variables.get(args[0]);
+  let variableStorage = context.variables.get(args[1]);
+  let __i = 0;
+
+  if (conditionTemplate) {
+    while (toBool_1.default(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value)))) {
+      if (__i > 100) break;
+      console.log(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value)));
+
+      if (variableStorage) {
+        result += walkers_1.parsePattern(new Context_1.Context(context, variableStorage.value));
+      }
+
+      __i++;
+    }
+  }
+
+  return result;
 });
 
 /***/ }),
@@ -2345,7 +2934,7 @@ exports.registerCorpus = exports.generate = void 0;
 
 const Context_1 = __webpack_require__(/*! ./Context */ "./junze-generator/out/Context.js");
 
-__webpack_require__(/*! ./builtinFunctions */ "./junze-generator/out/builtinFunctions.js");
+__webpack_require__(/*! ./builtinFunctions */ "./junze-generator/out/builtinFunctions/index.js");
 
 const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/out/registries.js");
 
@@ -2376,6 +2965,46 @@ function registerCorpus(corpus) {
 }
 
 exports.registerCorpus = registerCorpus;
+
+/***/ }),
+
+/***/ "./junze-generator/out/lib/boolToValue.js":
+/*!************************************************!*\
+  !*** ./junze-generator/out/lib/boolToValue.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function boolToValue(a) {
+  return a ? '1' : '0';
+}
+
+exports.default = boolToValue;
+
+/***/ }),
+
+/***/ "./junze-generator/out/lib/functionNameRegExp.js":
+/*!*******************************************************!*\
+  !*** ./junze-generator/out/lib/functionNameRegExp.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const functionNameRegExp = /[#A-Za-z]/;
+exports.default = functionNameRegExp;
 
 /***/ }),
 
@@ -2795,6 +3424,158 @@ exports.default = default_1;
 
 /***/ }),
 
+/***/ "./junze-generator/out/lib/listFormat.js":
+/*!***********************************************!*\
+  !*** ./junze-generator/out/lib/listFormat.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function listFormat(list) {
+  if (list instanceof Array) {
+    return JSON.stringify(list);
+  } else {
+    return list;
+  }
+}
+
+exports.default = listFormat;
+
+/***/ }),
+
+/***/ "./junze-generator/out/lib/listParse.js":
+/*!**********************************************!*\
+  !*** ./junze-generator/out/lib/listParse.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function listParse(array) {
+  try {
+    let a = JSON.parse(array);
+
+    if (a instanceof Array) {
+      return a;
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
+    return array.toString();
+  }
+}
+
+exports.default = listParse;
+
+/***/ }),
+
+/***/ "./junze-generator/out/lib/listStringify.js":
+/*!**************************************************!*\
+  !*** ./junze-generator/out/lib/listStringify.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function listStringify(a) {
+  return JSON.stringify(a.map(v => v.toString()));
+}
+
+exports.default = listStringify;
+
+/***/ }),
+
+/***/ "./junze-generator/out/lib/logicCalc.js":
+/*!**********************************************!*\
+  !*** ./junze-generator/out/lib/logicCalc.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const boolToValue_1 = __importDefault(__webpack_require__(/*! ./boolToValue */ "./junze-generator/out/lib/boolToValue.js"));
+
+const toBool_1 = __importDefault(__webpack_require__(/*! ./toBool */ "./junze-generator/out/lib/toBool.js"));
+
+function _logicCalc(operand1, operator, operand2) {
+  switch (operator) {
+    case '==':
+      return operand1 == operand2;
+
+    case '!=':
+      return operand1 != operand2;
+
+    case '===':
+      return parseFloat(operand1) == parseFloat(operand2);
+
+    case '!==':
+      return parseFloat(operand1) != parseFloat(operand2);
+
+    case '>':
+      return parseFloat(operand1) > parseFloat(operand2);
+
+    case '<':
+      return parseFloat(operand1) < parseFloat(operand2);
+
+    case '>=':
+      return parseFloat(operand1) >= parseFloat(operand2);
+
+    case '<=':
+      return parseFloat(operand1) <= parseFloat(operand2);
+
+    case '||':
+      return toBool_1.default(operand1) || toBool_1.default(operand2);
+
+    case '&&':
+      return toBool_1.default(operand1) && toBool_1.default(operand2);
+
+    case '!':
+      return !toBool_1.default(operand1);
+
+    default:
+      throw new SyntaxError('Invalid operator.');
+  }
+}
+
+function logicCalc(operand1, operator, operand2) {
+  return boolToValue_1.default(_logicCalc(operand1, operator, operand2));
+}
+
+exports.default = logicCalc;
+
+/***/ }),
+
 /***/ "./junze-generator/out/lib/rpnCalc.js":
 /*!********************************************!*\
   !*** ./junze-generator/out/lib/rpnCalc.js ***!
@@ -2872,6 +3653,28 @@ exports.default = default_1;
 
 /***/ }),
 
+/***/ "./junze-generator/out/lib/toBool.js":
+/*!*******************************************!*\
+  !*** ./junze-generator/out/lib/toBool.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function valueToBool(a) {
+  return !(a == false || a === 'false');
+}
+
+exports.default = valueToBool;
+
+/***/ }),
+
 /***/ "./junze-generator/out/registries.js":
 /*!*******************************************!*\
   !*** ./junze-generator/out/registries.js ***!
@@ -2918,9 +3721,13 @@ const Context_1 = __webpack_require__(/*! ./Context */ "./junze-generator/out/Co
 
 const errors_1 = __webpack_require__(/*! ./errors */ "./junze-generator/out/errors.js");
 
+const functionNameRegExp_1 = __importDefault(__webpack_require__(/*! ./lib/functionNameRegExp */ "./junze-generator/out/lib/functionNameRegExp.js"));
+
+const listStringify_1 = __importDefault(__webpack_require__(/*! ./lib/listStringify */ "./junze-generator/out/lib/listStringify.js"));
+
 const registries_1 = __webpack_require__(/*! ./registries */ "./junze-generator/out/registries.js");
 
-function parsePattern(context, terminator) {
+function parsePattern(context, terminator, doNotExecute) {
   let generated = '';
 
   for (;;) {
@@ -2935,7 +3742,7 @@ function parsePattern(context, terminator) {
     } else if (terminator === null || terminator === void 0 ? void 0 : terminator.includes(char)) {
       return generated;
     } else if (char === '%') {
-      generated += parseTemplate(context, terminator);
+      generated += parseTemplate(context, terminator, doNotExecute);
     } else if (char === '\\') {
       generated += parseEscape(context);
     } else {
@@ -2948,7 +3755,7 @@ function parsePattern(context, terminator) {
 
 exports.parsePattern = parsePattern;
 
-function parseTemplate(context, terminator) {
+function parseTemplate(context, terminator, doNotExecute) {
   context.next();
   let char = context.get();
 
@@ -2957,11 +3764,11 @@ function parseTemplate(context, terminator) {
   } else if (terminator === null || terminator === void 0 ? void 0 : terminator.includes(char)) {
     errors_1.throwUnexpectedToken(context, '%');
   } else if (char === '{') {
-    return parseList(context);
+    return parseList(context, doNotExecute);
   } else if (char === '[') {
-    return parseTag(context);
-  } else if (/[A-Za-z]/.test(char)) {
-    return parseFunction(context);
+    return parseTag(context, doNotExecute);
+  } else if (functionNameRegExp_1.default.test(char)) {
+    return parseFunction(context, doNotExecute);
   } else {
     errors_1.throwUnexpectedToken(context, char);
   }
@@ -2969,11 +3776,11 @@ function parseTemplate(context, terminator) {
 
 exports.parseTemplate = parseTemplate;
 
-function parseFunction(context) {
+function parseFunction(context, doNotExecute) {
   let funcName = context.get();
   let func = registries_1.functionRegistry.get(funcName);
 
-  if (!func) {
+  if (!doNotExecute && !func) {
     errors_1.throwNotDefinedError(context, funcName);
   }
 
@@ -2981,11 +3788,11 @@ function parseFunction(context) {
 
   if (context.get(1) === '(') {
     context.next();
-    args = parseArgs(context);
+    args = parseArgs(context, doNotExecute);
   }
 
   try {
-    return func(context, args);
+    return doNotExecute ? '' : func(context, args);
   } catch (e) {
     errors_1.throwRuntimeError(context, e);
   }
@@ -2993,7 +3800,7 @@ function parseFunction(context) {
 
 exports.parseFunction = parseFunction;
 
-function parseArgs(context) {
+function parseArgs(context, doNotExecute) {
   let args = [];
 
   for (;;) {
@@ -3005,14 +3812,14 @@ function parseArgs(context) {
       return args;
     } else if (char === '(' || char === ',') {
       context.next();
-      args.push(parsePattern(context, ',)'));
+      args.push(parsePattern(context, ',)', doNotExecute));
     }
   }
 }
 
 exports.parseArgs = parseArgs;
 
-function parseList(context) {
+function parseList(context, doNotExecute) {
   let items = [];
 
   for (;;) {
@@ -3021,77 +3828,104 @@ function parseList(context) {
     if (char === undefined) {
       errors_1.throwUnexpectedEndOfInput(context, ['}']);
     } else if (char === '}') {
-      return JSON.stringify(items);
+      return listStringify_1.default(items);
     } else if (char === '{' || char === ',') {
       context.next();
-      items.push(parsePattern(context, ',}'));
+      items.push(parsePattern(context, ',}', doNotExecute));
     }
   }
 }
 
 exports.parseList = parseList;
 
-function parseTag(context) {
+function parseTag(context, doNotExecute) {
   let tagName = '';
   let isTemplateMode = false;
+  let isReference = false;
+  let isParsingTagName = true;
+  let doNotReturn = false;
   context.next();
+
+  if (context.get() === '&') {
+    isReference = true;
+    context.next();
+  } else if (context.get() === '@') {
+    isReference = true;
+    doNotReturn = true;
+    context.next();
+  }
 
   if (context.get() === '%') {
     isTemplateMode = true;
     context.next();
   }
 
-  for (;;) {
+  for (;; context.next()) {
     let char = context.get();
 
     if (char === undefined) {
       errors_1.throwUnexpectedEndOfInput(context, [']']);
     } else if (char === ':') {
+      isParsingTagName = false;
       context.next();
       let startPos = context.index;
-      let result = parsePattern(context, ']');
+      let result = parsePattern(context, ']', doNotExecute || isTemplateMode && isReference);
       let endPos = context.index;
 
-      if (isTemplateMode) {
-        context.variables.set(tagName, {
-          value: context.pattern.slice(startPos, endPos),
-          isTemplateMode
-        });
-      } else {
-        context.variables.set(tagName, {
-          value: result,
-          isTemplateMode
-        });
+      if (!doNotExecute) {
+        if (isTemplateMode) {
+          context.variables.set(tagName, {
+            value: context.pattern.slice(startPos, endPos),
+            isTemplateMode
+          });
+        } else {
+          context.variables.set(tagName, {
+            value: result,
+            isTemplateMode
+          });
+        }
       }
 
-      return result;
+      if (isReference) {
+        return doNotReturn ? '' : tagName;
+      } else {
+        return result;
+      }
     } else if (char === ']') {
-      let variableStorage = context.variables.get(tagName);
+      isParsingTagName = false;
 
-      if (variableStorage) {
-        if (variableStorage.isTemplateMode) {
-          return parsePattern(new Context_1.Context(context, variableStorage.value));
+      if (!doNotExecute) {
+        let variableStorage = context.variables.get(tagName);
+
+        if (variableStorage) {
+          if (isReference) {
+            return tagName;
+          }
+
+          if (variableStorage.isTemplateMode) {
+            return parsePattern(new Context_1.Context(context, variableStorage.value));
+          } else {
+            return variableStorage.value;
+          }
         } else {
-          return variableStorage.value;
+          errors_1.throwNotDefinedError(context, tagName);
         }
       } else {
-        errors_1.throwNotDefinedError(context, tagName);
+        return '';
       }
-    } else {
+    } else if (isParsingTagName) {
       if (/[$\-0-9A-Z_a-z]/.test(char)) {
         tagName += char;
       } else {
         errors_1.throwInvalidTagName(context, char);
       }
     }
-
-    context.next();
   }
 }
 
 exports.parseTag = parseTag;
 
-function parseEscape(context) {
+function parseEscape(context, doNotExecute) {
   context.next();
   return context.get();
 }
