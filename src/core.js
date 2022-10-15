@@ -5,7 +5,7 @@ import { templateState } from './templateState';
 import './syncNlp';
 import { updateSelectorList } from './preset_saver';
 
-function initEnv(turnIndex, date){
+function initEnv(turnIndex, date, inputValue){
     let env = new Map();
     let today = new Date();
     env.set('__t', {
@@ -44,6 +44,10 @@ function initEnv(turnIndex, date){
         value: today.getDay().toString(),
         isTemplateMode: false
     });
+    env.set('__input', {
+        value: inputValue,
+        isTemplateMode: false,
+    })
     return env;
 }
 
@@ -54,6 +58,7 @@ document.getElementById('btn-generate').onclick = ()=>{
     let formDateYear = document.getElementById('form-date-year');
     let formDateMonth = document.getElementById('form-date-month');
     let formDateDay = document.getElementById('form-date-day');
+    let formInput = document.getElementById('form-input');
     date.setFullYear(
         formDateYear.value,
         formDateMonth.value-1,
@@ -66,7 +71,7 @@ document.getElementById('btn-generate').onclick = ()=>{
     let generatedValues = [];
     for(let i = 0; i < turns; i++){
         try{
-            let env = initEnv(i,date);
+            let env = initEnv(i,date,formInput.value);
             generatedValues.push(junze.generate(pattern, date, enableEval, env));
         }catch(e){
             logger.dialog('生成时出现了一个错误', `位于列${e?.context?.index+1}，错误描述是${e}`, {
