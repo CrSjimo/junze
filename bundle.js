@@ -2403,6 +2403,28 @@ registries_1.functionRegistry.set('E', (context, args) => {
 
 /***/ }),
 
+/***/ "./junze-generator/out/builtinFunctions/I_invoke.js":
+/*!**********************************************************!*\
+  !*** ./junze-generator/out/builtinFunctions/I_invoke.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
+
+registries_1.functionRegistry.set('I', (context, args) => {
+  return context.getValueOfVariable(args[0]);
+});
+
+/***/ }),
+
 /***/ "./junze-generator/out/builtinFunctions/L_logic_calculate.js":
 /*!*******************************************************************!*\
   !*** ./junze-generator/out/builtinFunctions/L_logic_calculate.js ***!
@@ -2720,6 +2742,8 @@ __webpack_require__(/*! ./e_date */ "./junze-generator/out/builtinFunctions/e_da
 __webpack_require__(/*! ./E_emoji */ "./junze-generator/out/builtinFunctions/E_emoji.js");
 
 __webpack_require__(/*! ./f_foreach */ "./junze-generator/out/builtinFunctions/f_foreach.js");
+
+__webpack_require__(/*! ./I_invoke */ "./junze-generator/out/builtinFunctions/I_invoke.js");
 
 __webpack_require__(/*! ./i_if */ "./junze-generator/out/builtinFunctions/i_if.js");
 
