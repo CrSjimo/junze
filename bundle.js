@@ -2103,11 +2103,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Context = void 0;
 
+const errors_1 = __webpack_require__(/*! ./errors */ "./junze-generator/out/errors.js");
+
+const walkers_1 = __webpack_require__(/*! ./walkers */ "./junze-generator/out/walkers.js");
+
 class Context {
   constructor(...args) {
     this.pattern = '';
-    this.variables = new Map();
+    this._variables = new Map();
     this._index = 0;
+    this._anonymousVariableCounter = 0;
 
     if (typeof args[0] === 'string') {
       let [pattern, date, env] = args;
@@ -2116,13 +2121,13 @@ class Context {
 
       if (env) {
         for (let entry of env) {
-          this.variables.set(...entry);
+          this._variables.set(...entry);
         }
       }
     } else if (args[0] instanceof Context) {
       let [context, pattern] = args;
       this.date = context.date;
-      this.variables = context.variables;
+      this._variables = context._variables;
       this.pattern = pattern;
     }
   }
@@ -2137,6 +2142,47 @@ class Context {
 
   next() {
     this._index++;
+  }
+
+  evaluate(pattern) {
+    return walkers_1.parsePattern(new Context(this, pattern));
+  }
+
+  getValueOfVariable(name) {
+    let storage = this._variables.get(name);
+
+    if (storage) {
+      if (storage.isTemplateMode) {
+        return this.evaluate(storage.value);
+      } else {
+        return storage.value;
+      }
+    } else {
+      errors_1.throwNotDefinedError(this, name);
+    }
+  }
+
+  getLiteralValueOfVariable(name) {
+    let storage = this._variables.get(name);
+
+    if (storage) {
+      return storage.value;
+    } else {
+      errors_1.throwNotDefinedError(this, name);
+    }
+  }
+
+  setVariable(name, value, isTemplateMode = false) {
+    if (name == '') {
+      name = `!${this._anonymousVariableCounter++}`;
+    }
+
+    this._variables.set(name, {
+      isTemplateMode,
+      value
+    });
+
+    return name;
   }
 
 }
@@ -2193,45 +2239,82 @@ const listParse_1 = __importDefault(__webpack_require__(/*! ../lib/listParse */ 
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
+const arrayOperations = {
+  concat(array, args) {
+    return listFormat_1.default(array.concat(...listParse_1.default(args[2])));
+  },
+
+  slice(array, args) {
+    let [l, r] = [parseInt(args[2]), parseInt(args[3])].map(a => isNaN(a) ? undefined : a);
+    return listFormat_1.default(array.slice(l, r));
+  },
+
+  indexOf(array, args) {
+    let index = parseInt(args[3]);
+    index = isNaN(index) ? undefined : index;
+    return array.indexOf(args[2], index).toString();
+  },
+
+  lastIndexOf(array, args) {
+    let item = args[2];
+    let index = parseInt(args[3]);
+    index = isNaN(index) ? undefined : index;
+    return array.indexOf(item, index).toString();
+  },
+
+  length(array) {
+    return array.length.toString();
+  },
+
+  includes(array, args) {
+    let item = args[2];
+    let index = parseInt(args[3]);
+    index = isNaN(index) ? undefined : index;
+    return boolToValue_1.default(array.includes(item, index));
+  },
+
+  map(array, args, context) {
+    if (typeof array == 'string') {
+      array = array.split('');
+    }
+
+    return listFormat_1.default(array.map(v => {
+      context.setVariable(args[2], v);
+      return context.getValueOfVariable(args[3]);
+    }));
+  },
+
+  join(array, args) {
+    if (typeof array == 'string') {
+      array = array.split('');
+    }
+
+    return array.join(args[2]);
+  },
+
+  split(array, args) {
+    if (typeof array == 'string') {
+      return listFormat_1.default(array.split(args[2]));
+    } else {
+      throw new TypeError('The operation "split" requires string.');
+    }
+  }
+
+};
 registries_1.functionRegistry.set('A', (context, args) => {
   let array = listParse_1.default(args[0]);
+  let index = 0;
 
-  switch (args[1]) {
-    case 'concat':
-      return listFormat_1.default(array.concat(...listParse_1.default(args[2])));
-
-    case 'slice':
-      let [l, r] = args.slice(2).map(parseInt).map(a => isNaN(a) ? undefined : a);
-      return listFormat_1.default(array.slice(l, r));
-
-    case 'indexOf':
-      {
-        let index = parseInt(args[3]);
-        index = isNaN(index) ? undefined : index;
-        return array.indexOf(args[2], index);
-      }
-
-    case 'lastIndexOf':
-      {
-        let item = args[2];
-        let index = parseInt(args[3]);
-        index = isNaN(index) ? undefined : index;
-        return array.indexOf(item, index);
-      }
-
-    case 'length':
-      return array.length;
-
-    case 'includes':
-      {
-        let item = args[2];
-        let index = parseInt(args[3]);
-        index = isNaN(index) ? undefined : index;
-        return boolToValue_1.default(array.includes(item, index));
-      }
-
-    default:
-      throw new SyntaxError('Invalid operation.');
+  if (!isNaN(index = parseInt(args[1]))) {
+    if (typeof array == 'string') {
+      throw new TypeError('The access operation requires list.');
+    } else {
+      return listFormat_1.default(array[index] = args[2]);
+    }
+  } else if (args[1] in arrayOperations) {
+    return arrayOperations[args[1]](array, args, context);
+  } else {
+    throw new SyntaxError('Invalid operation.');
   }
 });
 
@@ -2407,26 +2490,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
-
 const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
-const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
-
 registries_1.functionRegistry.set('w', (context, args) => {
   let result = '';
-  let conditionTemplate = context.variables.get(args[0]);
-  let variableStorage = context.variables.get(args[1]);
 
-  if (conditionTemplate) {
-    do {
-      if (variableStorage) {
-        result += walkers_1.parsePattern(new Context_1.Context(context, variableStorage.value));
-      }
-    } while (toBool_1.default(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value))));
-  }
+  do {
+    result += context.getValueOfVariable(args[1]);
+  } while (toBool_1.default(context.getValueOfVariable(args[0])));
 
   return result;
 });
@@ -2564,29 +2637,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
-
 const listParse_1 = __importDefault(__webpack_require__(/*! ../lib/listParse */ "./junze-generator/out/lib/listParse.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
-const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
-
 registries_1.functionRegistry.set('f', (context, args) => {
   let result = '';
   let array = listParse_1.default(args[0]);
-  let iteratorVariableReference = args[1];
-  let variableStorage = context.variables.get(args[2]);
 
   for (let x of array) {
-    context.variables.set(iteratorVariableReference, {
-      isTemplateMode: false,
-      value: x
-    });
-
-    if (variableStorage) {
-      result += walkers_1.parsePattern(new Context_1.Context(context, variableStorage.value));
-    }
+    context.setVariable(args[1], x);
+    result += context.getValueOfVariable(args[2]);
   }
 
   return result;
@@ -2614,23 +2675,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
-
 const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
-const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
-
 registries_1.functionRegistry.set('i', (context, args) => {
-  let conditionTemplate = context.variables.get(args[0]);
-  let trueVariableStorage = context.variables.get(args[1]);
-  let falseVariableStorage = context.variables.get(args[2]);
-
-  if (conditionTemplate && toBool_1.default(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value)))) {
-    return trueVariableStorage ? walkers_1.parsePattern(new Context_1.Context(context, trueVariableStorage.value)) : '';
+  if (toBool_1.default(context.getValueOfVariable(args[0]))) {
+    return context.getValueOfVariable(args[1]);
   } else {
-    return falseVariableStorage ? walkers_1.parsePattern(new Context_1.Context(context, falseVariableStorage.value)) : '';
+    return context.getValueOfVariable(args[2]);
   }
 });
 
@@ -2820,31 +2873,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const Context_1 = __webpack_require__(/*! ../Context */ "./junze-generator/out/Context.js");
-
 const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
-const walkers_1 = __webpack_require__(/*! ../walkers */ "./junze-generator/out/walkers.js");
-
 registries_1.functionRegistry.set('w', (context, args) => {
   let result = '';
-  let conditionTemplate = context.variables.get(args[0]);
-  let variableStorage = context.variables.get(args[1]);
-  let __i = 0;
 
-  if (conditionTemplate) {
-    while (toBool_1.default(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value)))) {
-      if (__i > 100) break;
-      console.log(walkers_1.parsePattern(new Context_1.Context(context, conditionTemplate.value)));
-
-      if (variableStorage) {
-        result += walkers_1.parsePattern(new Context_1.Context(context, variableStorage.value));
-      }
-
-      __i++;
-    }
+  while (toBool_1.default(context.getValueOfVariable(args[0]))) {
+    result += context.getValueOfVariable(args[1]);
   }
 
   return result;
@@ -3717,8 +3754,6 @@ exports.parseEval = exports.parseEscape = exports.parseTag = exports.parseList =
 
 const random_1 = __importDefault(__webpack_require__(/*! random */ "./junze-generator/node_modules/random/dist/esm/index.esm.js"));
 
-const Context_1 = __webpack_require__(/*! ./Context */ "./junze-generator/out/Context.js");
-
 const errors_1 = __webpack_require__(/*! ./errors */ "./junze-generator/out/errors.js");
 
 const functionNameRegExp_1 = __importDefault(__webpack_require__(/*! ./lib/functionNameRegExp */ "./junze-generator/out/lib/functionNameRegExp.js"));
@@ -3874,15 +3909,9 @@ function parseTag(context, doNotExecute) {
 
       if (!doNotExecute) {
         if (isTemplateMode) {
-          context.variables.set(tagName, {
-            value: context.pattern.slice(startPos, endPos),
-            isTemplateMode
-          });
+          tagName = context.setVariable(tagName, context.pattern.slice(startPos, endPos), isTemplateMode);
         } else {
-          context.variables.set(tagName, {
-            value: result,
-            isTemplateMode
-          });
+          tagName = context.setVariable(tagName, result, isTemplateMode);
         }
       }
 
@@ -3895,20 +3924,10 @@ function parseTag(context, doNotExecute) {
       isParsingTagName = false;
 
       if (!doNotExecute) {
-        let variableStorage = context.variables.get(tagName);
-
-        if (variableStorage) {
-          if (isReference) {
-            return tagName;
-          }
-
-          if (variableStorage.isTemplateMode) {
-            return parsePattern(new Context_1.Context(context, variableStorage.value));
-          } else {
-            return variableStorage.value;
-          }
+        if (isReference) {
+          return doNotReturn ? '' : tagName;
         } else {
-          errors_1.throwNotDefinedError(context, tagName);
+          return context.getValueOfVariable(tagName);
         }
       } else {
         return '';
@@ -22735,7 +22754,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function initEnv(turnIndex, date) {
+function initEnv(turnIndex, date, inputValue) {
   let env = new Map();
   let today = new Date();
   env.set('__t', {
@@ -22774,6 +22793,10 @@ function initEnv(turnIndex, date) {
     value: today.getDay().toString(),
     isTemplateMode: false
   });
+  env.set('__input', {
+    value: inputValue,
+    isTemplateMode: false
+  });
   return env;
 }
 
@@ -22784,6 +22807,7 @@ document.getElementById('btn-generate').onclick = () => {
   let formDateYear = document.getElementById('form-date-year');
   let formDateMonth = document.getElementById('form-date-month');
   let formDateDay = document.getElementById('form-date-day');
+  let formInput = document.getElementById('form-input');
   date.setFullYear(formDateYear.value, formDateMonth.value - 1, formDateDay.value);
   date.setHours(0, 0, 0, 0);
   let pattern = document.getElementById('form-pattern').value;
@@ -22793,7 +22817,7 @@ document.getElementById('btn-generate').onclick = () => {
 
   for (let i = 0; i < turns; i++) {
     try {
-      let env = initEnv(i, date);
+      let env = initEnv(i, date, formInput.value);
       generatedValues.push(_junze_generator__WEBPACK_IMPORTED_MODULE_0__["generate"](pattern, date, enableEval, env));
     } catch (e) {
       var _e$context;
