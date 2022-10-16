@@ -2128,6 +2128,7 @@ class Context {
       let [context, pattern] = args;
       this.date = context.date;
       this._variables = context._variables;
+      this._anonymousVariableCounter = context._anonymousVariableCounter;
       this.pattern = pattern;
     }
   }
@@ -2512,7 +2513,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
+const valueToBool_1 = __importDefault(__webpack_require__(/*! ../lib/valueToBool */ "./junze-generator/out/lib/valueToBool.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
@@ -2521,7 +2522,7 @@ registries_1.functionRegistry.set('w', (context, args) => {
 
   do {
     result += context.getValueOfVariable(args[1]);
-  } while (toBool_1.default(context.getValueOfVariable(args[0])));
+  } while (valueToBool_1.default(context.getValueOfVariable(args[0])));
 
   return result;
 });
@@ -2697,12 +2698,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
+const valueToBool_1 = __importDefault(__webpack_require__(/*! ../lib/valueToBool */ "./junze-generator/out/lib/valueToBool.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
 registries_1.functionRegistry.set('i', (context, args) => {
-  if (toBool_1.default(context.getValueOfVariable(args[0]))) {
+  if (valueToBool_1.default(context.getValueOfVariable(args[0]))) {
     return context.getValueOfVariable(args[1]);
   } else {
     return context.getValueOfVariable(args[2]);
@@ -2897,14 +2898,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const toBool_1 = __importDefault(__webpack_require__(/*! ../lib/toBool */ "./junze-generator/out/lib/toBool.js"));
+const valueToBool_1 = __importDefault(__webpack_require__(/*! ../lib/valueToBool */ "./junze-generator/out/lib/valueToBool.js"));
 
 const registries_1 = __webpack_require__(/*! ../registries */ "./junze-generator/out/registries.js");
 
 registries_1.functionRegistry.set('w', (context, args) => {
   let result = '';
 
-  while (toBool_1.default(context.getValueOfVariable(args[0]))) {
+  while (valueToBool_1.default(context.getValueOfVariable(args[0]))) {
     result += context.getValueOfVariable(args[1]);
   }
 
@@ -3044,7 +3045,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 function boolToValue(a) {
-  return a ? '1' : '0';
+  return a ? 'true' : 'false';
 }
 
 exports.default = boolToValue;
@@ -3587,7 +3588,7 @@ Object.defineProperty(exports, "__esModule", {
 
 const boolToValue_1 = __importDefault(__webpack_require__(/*! ./boolToValue */ "./junze-generator/out/lib/boolToValue.js"));
 
-const toBool_1 = __importDefault(__webpack_require__(/*! ./toBool */ "./junze-generator/out/lib/toBool.js"));
+const valueToBool_1 = __importDefault(__webpack_require__(/*! ./valueToBool */ "./junze-generator/out/lib/valueToBool.js"));
 
 function _logicCalc(operand1, operator, operand2) {
   switch (operator) {
@@ -3616,13 +3617,13 @@ function _logicCalc(operand1, operator, operand2) {
       return parseFloat(operand1) <= parseFloat(operand2);
 
     case '||':
-      return toBool_1.default(operand1) || toBool_1.default(operand2);
+      return valueToBool_1.default(operand1) || valueToBool_1.default(operand2);
 
     case '&&':
-      return toBool_1.default(operand1) && toBool_1.default(operand2);
+      return valueToBool_1.default(operand1) && valueToBool_1.default(operand2);
 
     case '!':
-      return !toBool_1.default(operand1);
+      return !valueToBool_1.default(operand1);
 
     default:
       throw new SyntaxError('Invalid operator.');
@@ -3714,10 +3715,10 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ "./junze-generator/out/lib/toBool.js":
-/*!*******************************************!*\
-  !*** ./junze-generator/out/lib/toBool.js ***!
-  \*******************************************/
+/***/ "./junze-generator/out/lib/valueToBool.js":
+/*!************************************************!*\
+  !*** ./junze-generator/out/lib/valueToBool.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3903,6 +3904,7 @@ function parseTag(context, doNotExecute) {
   let isReference = false;
   let isParsingTagName = true;
   let doNotReturn = false;
+  let isInvoke = false;
   context.next();
 
   if (context.get() === '&') {
@@ -3911,6 +3913,11 @@ function parseTag(context, doNotExecute) {
   } else if (context.get() === '@') {
     isReference = true;
     doNotReturn = true;
+    context.next();
+  }
+
+  if (context.get() === '*') {
+    isInvoke = true;
     context.next();
   }
 
@@ -3932,6 +3939,10 @@ function parseTag(context, doNotExecute) {
       let endPos = context.index;
 
       if (!doNotExecute) {
+        if (isInvoke) {
+          tagName = context.getValueOfVariable(tagName);
+        }
+
         if (isTemplateMode) {
           tagName = context.setVariable(tagName, context.pattern.slice(startPos, endPos), isTemplateMode);
         } else {
@@ -3950,6 +3961,8 @@ function parseTag(context, doNotExecute) {
       if (!doNotExecute) {
         if (isReference) {
           return doNotReturn ? '' : tagName;
+        } else if (isInvoke) {
+          return context.getValueOfVariable(context.getValueOfVariable(tagName));
         } else {
           return context.getValueOfVariable(tagName);
         }
